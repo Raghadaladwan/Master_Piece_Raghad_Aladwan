@@ -95,13 +95,14 @@ let checkUserLogin = (callBack, userInfo) => {
         if (err) {
           console.log("ERR:", err);
         } else {
-          // console.log("DOCS trainee:", traineeInfo);
+          console.log("DOCS trainee:", traineeInfo);
           callBack(traineeInfo._id);
         }
       }
     );
   }
   if (userInfo.role === "company") {
+
     Companies.findOne(
       {
         email: userInfo.email,
@@ -110,10 +111,12 @@ let checkUserLogin = (callBack, userInfo) => {
       },
       function(err, copmanyInfo) {
         if (err) {
+          
           console.log("ERR:", err);
         } else {
+          
           console.log("DOCS Company:", copmanyInfo._id);
-          getCompany(copmanyInfo._id);
+          callBack(copmanyInfo._id);
         }
       }
     );
@@ -140,7 +143,7 @@ let getCompany = cb => {
       console.log("ERR:", err);
       cb(err);
     } else {
-      console.log("DOCS FROM getTrainee:", docs);
+      console.log("DOCS FROM get company:", docs);
       cb(docs);
     }
   });
@@ -196,22 +199,22 @@ let registCompany = (cb, box) => {
 };
 
 // _______Get user object after login
-let getUser = (cb, id) => {
+let getUser = (callBack, id) => {
   console.log("id", id);
 
   Trainee.findOne({ _id: id }, (error, trainee_response) => {
     if (error) {
       console.log(error);
     } else if (trainee_response != null) {
-      cb(trainee_response);
+      callBack(trainee_response);
       // console.log("DB getUse Trainee >>>>>>>>>>>", trainee_response);
     } else {
       Companies.findOne({ _id: id }, (error, company_response) => {
         if (error) {
           console.log(error);
         } else {
-          cb(company_response);
-          // console.log("DB getUse COMPANY >>>>>>>>>>>", company_response);
+          callBack(company_response);
+ 
         }
       });
     }
@@ -220,30 +223,80 @@ let getUser = (cb, id) => {
 
 let profileInfo = (callBack, id) => {
   // console.log("id DB ////", id);
+  console.log("callBack", id);
+
+
+  // Trainee.count({_id:id}, function(error, trainee_info){
+  //   console.log(count)
+  //   if(count>0){
+  //     console.log("TRAINEE")
+  //     callBack(trainee_info)
+  //   } else if( error)
+  //   {
+  //     console.log(error)
+  //   }
+  //   else{
+
+  //     Companies.count({_id:id}, function(error,company_info){
+  //       console.log(count)
+  //       if(count>0){
+  //         console.log("COMPANYIES")
+  //         callBack(company_info)
+  //       } else if (error){
+  //         console.log(error)
+  //       }
+  //     })
+  //   }
+  // })  
+  // Trainee.count({})
+
+
   Trainee.findOne({ _id: id }, (error, trainee_info) => {
-    if (error) {
-      console.log(error);
-    } else if (trainee_info != null) {
+    console.log("tranee Info", trainee_info)
+
+    if (trainee_info !== null) {
+      // console.log(error);
+
+      console.log("tranee Info", trainee_info)
+
       callBack(trainee_info);
-      // console.log("DB trainee profile Trainee >>>>>>>>>>>", trainee_info);
-    } else {
+
+    } else  {
+      console.log("FFFFFFFFFFFFFFFFFFF")
+      console.log(id)
       Companies.findOne({ _id: id }, (error, company_info) => {
-        if (error) {
-          console.log(error);
-        } else {
+        if (company_info !==null) {
           callBack(company_info);
+          console.log(company_info)
+        } else {
+          console.log(error);
+
           // console.log("DB company profile COMPANY >>>>>>>>>>>", company_info);
         }
       });
     }
+    
   });
+  // Trainee.findOne({ _id: id }, (error, trainee_info) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else if (trainee_info != null) {
+  //     callBack(trainee_info);
+  //     // console.log("DB trainee profile Trainee >>>>>>>>>>>", trainee_info);
+  //   } else {
+  //     Companies.findOne({ _id: id }, (error, company_info) => {
+  //       if (error) {
+  //         console.log(error);
+  //       } else {
+  //         callBack(company_info);
+  //         // console.log("DB company profile COMPANY >>>>>>>>>>>", company_info);
+  //       }
+  //     });
+  //   }
+  // });
 };
 
 let addPost = (callBack, newPost, id) => {
-  // console.log("newPost from DataBase", newPost);
-  // console.log("newPost id ", id);
-
-  // console.log("inner add post DATABASE");
   Companies.update(
     { _id: id },
     { $push: { post: newPost } },
@@ -251,8 +304,9 @@ let addPost = (callBack, newPost, id) => {
       if (error) {
         console.log("Error");
       } else {
-        callBack(response);
-        // console.log("callBAck",response)
+        console.log("newPost",newPost)
+        callBack(newPost);
+        console.log("callBAck",response)
       }
     }
   );
@@ -265,10 +319,37 @@ let companyPosts = (callBack , id)=>{
     if(error){
       console.log(error)
     } else {
+
+      console.log("DB companyPost", companyPosts.post);
+
       callBack(companyPosts.post);
-      // console.log("DB companyPost", companyPosts.post);
     }
   })
+
+}
+
+let EditTraineeProfile = (callBack ,newInfo ,trainee_id)=>{
+  console.log("newInfo Database", newInfo)
+  Trainee.updateMany(
+    {_id:trainee_id},
+    {$set :{
+      fullName: newInfo.fullName,
+      email: newInfo.email,
+      password:newInfo.password,
+      gender: newInfo.gender,
+      img_path: newInfo.img_path,
+      university:newInfo.university,
+      field:newInfo.field
+    }},
+    (error, response)=>{
+      if(error){
+        console.log(error)
+      } else {
+        console.log("response from DB",response)
+        callBack(newInfo);
+      }
+    }
+  )
 
 }
 
@@ -278,14 +359,11 @@ let deletePost = (callBack , id_company , id_post)=>{
     if(error){
       console.log("ERROR")
     } else {
-      console.log("DOC From delete", Doc[0].post);
       Doc[0].post = Doc[0].post.filter(post =>{
         return id_post !== post.id;
-
       })
-      console.log("object")
       Doc[0].save(()=>{
-        callBack(id_component);
+        callBack(id_company);
       })
     }
   })
@@ -319,5 +397,6 @@ module.exports = {
   profileInfo,
   addPost,
   companyPosts,
-  deletePost
+  deletePost,
+  EditTraineeProfile
 };

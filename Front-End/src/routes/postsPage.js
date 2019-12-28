@@ -23,13 +23,6 @@ class postsPage extends Component {
 
           // AXIOS to get back company post
           //
-          axios
-            .get(
-              `http://localhost:9000/copmany_posts/${cookie.load("isLoggedIn")}`
-            )
-            .then(response => {
-              this.setState({ post: response.data });
-            });
         }
         if (response.data.role === "trainee") {
           this.setState({
@@ -41,33 +34,24 @@ class postsPage extends Component {
         console.log("ERROR");
       });
 
+    this.getPost();
+
     // another axios to git posts
   }
 
+  getPost = () => {
+    axios
+      .get(`http://localhost:9000/copmany_posts/${cookie.load("isLoggedIn")}`)
+      .then(response => {
+        this.setState({ post: response.data });
+      });
+  };
 
-  
 
-  // 5e00daa2e797910c42d8e754
-  // deletePost = id_post => {
-  //   console.log("delete _id" , id_post);
-  // console.log("this.state.post id",this.state.post.id)
-
-  //   // /delete_Post/:id_company/:id_post
-  //   axios
-  //     .delete(`/delete_Post/${cookie.load("isLoggedIn")}/${id_post}`)
-  //     .then(response => {
-  //       console.log(response);
-  //       this.setState({ post: response });
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
 
   addPost = event => {
     event.preventDefault();
     let newPost = {
-      // img_path: event.target["img_path"].value,
       field: event.target["field"].value,
       job_description: event.target["job_description"].value,
       from_Date: event.target["from_Date"].value,
@@ -88,18 +72,18 @@ class postsPage extends Component {
         )
         .then(({ data }) => {
           console.log(data);
-          // this.setState({post: data})
-
+          this.setState({post: data})
         })
-        .catch(error => {
-          console.log(error);
-        });
     }
+    this.getPost();
+    
   };
 
+  // *** After adding the post it doesn't Appear directly *****
+
   render() {
-    const { addPost  , deletePost} = this;
-    const { comp_info} = this.state;
+    const { addPost, deletePost } = this;
+    const { comp_info } = this.state;
     if (cookie.load("isLoggedIn") === undefined) {
       return <div> Can't View this</div>;
     }
@@ -148,7 +132,7 @@ class postsPage extends Component {
                 <button type="submit" className="btn btn-primary">
                   Add Post
                 </button>
-                <div>{this.state.text}</div>
+                {/* <div>{this.state.text}</div> */}
               </form>
             </div>
           </div>
@@ -160,6 +144,7 @@ class postsPage extends Component {
                 image={this.state.comp_info.img_path}
                 deletePost={deletePost}
                 userid={this.state.userid}
+                getPost={this.getPost}
               />
             );
           })}

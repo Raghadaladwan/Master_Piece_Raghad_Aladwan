@@ -384,7 +384,7 @@ class registerPage extends Component {
                       onChange={this.getImagePath}
                     />
 
-                    <input type="button" onClick={fileUpload} />
+                    <input type="button" onClick={fileUpload} value="Upload image" />
 
                     <progress
                       value={this.state.progress}

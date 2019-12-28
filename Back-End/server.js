@@ -24,7 +24,9 @@ app.get("/", (req, res) => {
 // ____________________________________________Login User
 
 app.post("/loginUser", (request, res) => {
+
   let email_Password_Role = request.body;
+  console.log(email_Password_Role)
   DB.checkUserLogin(user => {
     res.json(user);
   }, email_Password_Role);
@@ -57,7 +59,7 @@ app.get('/getUser/:id', (req, res) => {
 });
 //____________________________________Profile
 app.get('/profile/:id' , (req ,res)=>{
-  // console.log("// Porfile //",req.params.id)
+  console.log("// Porfile //",req.params.id)
   DB.profileInfo(result=>{
     res.json(result);
 
@@ -73,6 +75,17 @@ app.put('/add_post/:id' , (req,res)=>{
   let box = req.body;
 console.log(req.params.id)
   DB.addPost((response)=>{res.send(response)},box ,req.params.id);
+})
+
+
+
+app.put('/EditTraineeProfile/:id', (req,res)=>{
+  console.log("req.body",req.body)
+
+  console.log("req.params.id SERVER", req.params.id)
+  
+  DB.EditTraineeProfile((response)=>{ res.send(response)} , req.body,req.params.id)
+ 
 })
 
 app.get('/copmany_posts/:id' , (req,res)=>{

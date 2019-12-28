@@ -38,7 +38,7 @@ class App extends React.Component {
 
             <Route path="/loginpage" component={LoginPage}></Route>
             <Route path="/registerpage" component={RegisterPage}></Route>
-            <Route path="/about" component={AboutUsPage}></Route>
+            <Route path="/aboutUs" component={AboutUsPage}></Route>
             <FooterComponent />
           </BrowserRouter>
         </>
@@ -55,6 +55,7 @@ class App extends React.Component {
             <Route path="/postspage" component={PostsPage} ></Route>
             <Route path="/PostPage" component={PostPage}></Route>
             <Route path="/userprofile" component={UserProfilePage}></Route>
+            <Route path="/aboutUs" component={AboutUsPage}></Route>
             <FooterComponent />
 
           </BrowserRouter>

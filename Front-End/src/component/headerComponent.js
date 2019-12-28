@@ -56,7 +56,7 @@ class headerComponent extends Component {
 
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <a className="nav-item nav-link" href="/about">
+                <a className="nav-item nav-link" href="/aboutUs">
                   ABOUT US
                 </a>
 
@@ -109,7 +109,7 @@ class headerComponent extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <a className="nav-item nav-link active" href="/about">
+                <a className="nav-item nav-link active" href="/aboutUs">
                   ABOUT US
                 </a>
 

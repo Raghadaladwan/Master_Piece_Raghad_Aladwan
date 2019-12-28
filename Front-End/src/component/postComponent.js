@@ -7,14 +7,11 @@ class postComponent extends Component {
   deletePost = id_post => {
     console.log("user id", this.props.userid);
     console.log("id_post", this.props.post._id);
-
     axios
       .delete(`http://localhost:9000/delete_Post/${this.props.userid}/${this.props.post._id}`)
       .then(response => {
         console.log(response);
-
-        this.setState({ post: response });
-
+        this.props.getPost()
       })
       .catch(error => {
         console.log(error);
@@ -44,7 +41,6 @@ class postComponent extends Component {
           </h4>
           <div>
             <button onClick={this.deletePost}>delete</button>
-            <div>_________________________________</div>
           </div>
         </div>
       </div>

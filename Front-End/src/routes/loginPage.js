@@ -28,14 +28,17 @@ export default class loginPage extends Component {
         role: this.state.role
       })
       .then(response => {
+        console.log(response)
         if (response.data != null) {
           cookie.save("isLoggedIn", response.data);
-          this.props.history.push("/admindashboardpage");
+          this.props.history.push("/postspage");
           window.location.reload();
         } else {
           this.setState({ massage: "wrong E-mail or password" });
         }
-      });
+      }).catch(
+        console.log("LOGIN USER")
+      )
   };
 
   render() {
