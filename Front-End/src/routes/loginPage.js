@@ -25,10 +25,9 @@ export default class loginPage extends Component {
       .post("http://localhost:9000/loginUser", {
         email: this.state.email,
         password: this.state.password,
-        role: this.state.role
       })
       .then(response => {
-        console.log(response)
+        console.log(response);
         if (response.data != null) {
           cookie.save("isLoggedIn", response.data);
           this.props.history.push("/postspage");
@@ -36,9 +35,10 @@ export default class loginPage extends Component {
         } else {
           this.setState({ massage: "wrong E-mail or password" });
         }
-      }).catch(
-        console.log("LOGIN USER")
-      )
+      })
+      .catch(
+        this.setState({ massage:"Wrong Email or password"})
+      );
   };
 
   render() {
@@ -90,25 +90,6 @@ export default class loginPage extends Component {
                 required
               />
 
-              <div className="form-group">
-                <label htmlFor="role"> You are</label>
-                <br />
-                <input
-                  type="radio"
-                  name="role"
-                  value="trainee"
-                  onChange={changeInput}
-                />
-                trainee
-                <input
-                  type="radio"
-                  name="role"
-                  value="company"
-                  onChange={changeInput}
-                />
-                company
-              </div>
-
               <button
                 onClick={checkUserinfo}
                 style={{
@@ -129,7 +110,6 @@ export default class loginPage extends Component {
 
             {this.state.massage}
           </div>
-          {/* <button onClick={()=>{console.log()}}>Check</button> */}
         </div>
       );
     }

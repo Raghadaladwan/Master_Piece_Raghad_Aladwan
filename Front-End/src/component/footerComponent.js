@@ -3,7 +3,13 @@ import React, { Component } from "react";
 class footerComponents extends Component {
   state = {};
   render() {
-    return <div>footerComponents</div>;
+    return (
+      <div className="fixed-bottom">
+        <div>
+            <div>Footer</div>
+        </div>
+      </div>
+    );
   }
 }
 

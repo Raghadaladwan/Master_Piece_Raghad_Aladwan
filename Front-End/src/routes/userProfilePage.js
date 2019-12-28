@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
+import { async } from "@firebase/util";
 
 class userProfilePage extends Component {
   state = {
@@ -30,9 +31,6 @@ class userProfilePage extends Component {
   }
 
 
-
-
-
   // console.log(response.data)
   // if (response.data.role === "trainee") 
   // {
@@ -51,7 +49,6 @@ class userProfilePage extends Component {
   };
 
   updateTraineeInfo = async event => {
-    const { gender } = this.form;
     event.preventDefault();
     console.log("in Update");
 
@@ -61,7 +58,8 @@ class userProfilePage extends Component {
       field: this.fieldType.value,
       password: this.refs.password.value,
       university: this.uniType.value,
-      gender: this.refs.gender.value
+      gender: this.state.traineeInfo.gender,
+      img_path:this.state.traineeInfo.img_path
     };
     this.setState({
       isInEdit: false
@@ -81,6 +79,44 @@ class userProfilePage extends Component {
     console.log("this.state", this.state.traineeInfo);
   };
 
+  updateCompanyInfo = async event=>{
+    console.log(this.state.companyInfo)
+
+    event.preventDefault();
+
+    const newCompanyInfo ={
+      companyName: this.refs.name.value,
+      email: this.refs.email.value,
+      password: this.refs.password.value,
+      website: this.refs.website.value,
+      city: this.refs.city.value,
+      location: this.refs.location.value,
+      comp_description: this.refs.comp_description.value,
+      img_path: this.state.companyInfo.img_path
+      
+
+    }
+    this.setState({
+      isInEdit: false
+    });
+    console.log("newComp Info", newCompanyInfo)
+
+    await axios
+    .put(
+      `http://localhost:9000/EditCompanyProfile/${this.state.userid}`,
+      newCompanyInfo
+    )
+
+    .then(response => {
+      this.setState({
+        companyInfo: response.data
+      });
+    });
+
+  console.log("this.state", this.state.companyInfo);
+};
+
+  
 
 
   renderEditTraineeView = () => {
@@ -210,20 +246,103 @@ class userProfilePage extends Component {
     );
   };
 
-  // renderEditCompanyInfo =()=>{
-  //   console.log("object")
-  // }
-  // renderDefaultCompanyView = () => {
-  //   return (
-  //     <div>
-  //       hi
-        /* <div onDoubleClick={this.edit_info}>
+  renderEditCompanyInfo =()=>{
+    return (
+      <div className="container">
+        <div>
+          <form 
+          onSubmit={this.updateCompanyInfo}
+          ref={form => this.form = form}>
+            <h1 className="h3 mb-3 font-weight-normal">
+       
+              Edit your Information
+            </h1>
+     
+            <div className="form-group">
+              <label>Company Name : </label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={this.state.companyInfo.name}
+                ref="name"
+              />
+            </div>
+            <div className="form-group">
+              <label>Email : </label>
+              <input
+                type="text"
+                name="email"
+                defaultValue={this.state.companyInfo.email}
+                ref="email"
+              />
+            </div>
+            <div className="form-group">
+              <label>City : </label>
+              <input
+                type="text"
+                name="city"
+                defaultValue={this.state.companyInfo.city}
+                ref="city"
+              />
+            </div>
+            <div className="form-group">
+              <label>Location : </label>
+              <input
+                type="text"
+                name="location"
+                defaultValue={this.state.companyInfo.location}
+                ref="location"
+              />
+            </div>
+            <div className="form-group">
+              <label>Website : </label>
+              <input
+                type="text"
+                name="website"
+                defaultValue={this.state.companyInfo.website}
+                ref="website"
+              />
+            </div>
+            <div className="form-group">
+              <label>Password : </label>
+              <input
+                type="password"
+                name="password"
+                defaultValue={this.state.companyInfo.password}
+                ref="password"
+              />
+            </div>
+            <div className="form-group">
+              <label>About Company  : </label>
+              <textarea
+                type="password"
+                name="comp_description"
+                defaultValue={this.state.companyInfo.comp_description}
+                ref="comp_description"
+              />
+            </div>
+
+            <button onClick={this.edit_info}>Cancel</button>
+
+            <button onClick={this.updateCompanyInfo}>Save</button>
+          </form>
+        </div>
+      </div>
+    )
+  }
+  renderDefaultCompanyView = () => {
+    return (
+      <div>
+        
+         <div onDoubleClick={this.edit_info}>
           <span>Company Name : </span>
           {this.state.companyInfo.name}
         </div>
         <div onDoubleClick={this.edit_info}>
           <span>Website : </span>
-          {this.state.companyInfo.website}
+         <a 
+         href={this.state.companyInfo.website}  
+         target="_blank"> {this.state.companyInfo.website}</a>
         </div>
         <div onDoubleClick={this.edit_info}>
           <span>City: </span>
@@ -247,11 +366,13 @@ class userProfilePage extends Component {
             style={{ width: 150, height: 150 }}
             src={this.state.companyInfo.img_path}
           ></img>
-        </div> */
-      // </div>
+        </div> 
+       </div>
+    );
+  };
 
-    // );
-  // };
+
+
 
   render() {
     const { traineeInfo, companyInfo } = this.state;
@@ -264,7 +385,12 @@ class userProfilePage extends Component {
         ? this.renderEditTraineeView()
         : this.renderDefaultTraineeInfo()
     }
-
+if(companyInfo !== null){
+  return this.state.isInEdit
+  ? this.renderEditCompanyInfo()
+  : this.renderDefaultCompanyView()
+}
+    
     return<div>company</div>
   //   if (companyInfo !== null) {
   // return<div>company</div>

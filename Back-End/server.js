@@ -24,9 +24,8 @@ app.get("/", (req, res) => {
 // ____________________________________________Login User
 
 app.post("/loginUser", (request, res) => {
-
   let email_Password_Role = request.body;
-  console.log(email_Password_Role)
+  console.log(email_Password_Role);
   DB.checkUserLogin(user => {
     res.json(user);
   }, email_Password_Role);
@@ -35,71 +34,80 @@ app.post("/loginUser", (request, res) => {
 // ____________________________________________Trainee Register
 app.post("/traineeregister", (req, res) => {
   let box = req.body.newUser;
-  // console.log("/traineeregister", box)
   DB.registTrainee(tr => {
     res.json(tr);
   }, box);
 });
 
-
 app.post("/companyregister", (req, res) => {
   let box = req.body.newCompany;
-  // console.log("/companyregister", box)
   DB.registCompany(response => {
     res.json(response);
   }, box);
 });
 
 // __________________________________________Get Trainee
-app.get('/getUser/:id', (req, res) => {
-
+app.get("/getUser/:id", (req, res) => {
   DB.getUser(result => {
-    res.json(result)
-  },req.params.id);
+    res.json(result);
+  }, req.params.id);
 });
 //____________________________________Profile
-app.get('/profile/:id' , (req ,res)=>{
-  console.log("// Porfile //",req.params.id)
-  DB.profileInfo(result=>{
+app.get("/profile/:id", (req, res) => {
+  DB.profileInfo(result => {
     res.json(result);
-
-  } , req.params.id)
-
-} )
-
-
+  }, req.params.id);
+});
 
 //________________________________ ADD GET Post
 
-app.put('/add_post/:id' , (req,res)=>{
+app.put("/add_post/:id", (req, res) => {
   let box = req.body;
-console.log(req.params.id)
-  DB.addPost((response)=>{res.send(response)},box ,req.params.id);
-})
+  DB.addPost(
+    response => {
+      res.send(response);
+    },
+    box,
+    req.params.id
+  );
+});
 
+app.put("/EditTraineeProfile/:id", (req, res) => {
+  DB.EditTraineeProfile(
+    response => {
+      res.send(response);
+    },
+    req.body,
+    req.params.id
+  );
+});
 
+app.put("/EditCompanyProfile/:id", (req, res) => {
+  DB.EditCompanyProfile(
+    response => {
+      res.send(response);
+    },
+    req.body,
+    req.params.id
+  );
+});
 
-app.put('/EditTraineeProfile/:id', (req,res)=>{
-  console.log("req.body",req.body)
-
-  console.log("req.params.id SERVER", req.params.id)
-  
-  DB.EditTraineeProfile((response)=>{ res.send(response)} , req.body,req.params.id)
- 
-})
-
-app.get('/copmany_posts/:id' , (req,res)=>{
-  // console.log("/company_posts/:id", req.params.id)
-  DB.companyPosts(result =>{
+app.get("/copmany_posts/:id", (req, res) => {
+  DB.companyPosts(result => {
     res.json(result);
+  }, req.params.id);
+});
+
+app.get('/all_posts/:id',(req,res)=>{
+  DB.allPosts(result=>{
+    res.json(result)
   }, req.params.id)
 })
 
-
 app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
-  console.log("CALL BACK FROM SERVER  DELETE");
-  console.log("req.params.id_company",req.params.id_company)
-  console.log("req.params.id_post",req.params.id_post)
+  // console.log("CALL BACK FROM SERVER  DELETE");
+  // console.log("req.params.id_company", req.params.id_company);
+  // console.log("req.params.id_post", req.params.id_post);
   DB.deletePost(
     result => {
       res.json(result);
@@ -108,24 +116,6 @@ app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
     req.params.id_post
   );
 });
-// app.get('/posts',(req,res)=>{
-//   DB.getPosts(res =>{
-//     console.log("///Posts get post server");
-//     res.json(res);
-//   })
-// })
-//_____________________________
-
-
-
-
-// app.get('postspage/:id', (req ,res)=>{
-//   DB.getPosts((response)=>{ res.send(response)}, req.params.id)
-// })
-
-
-
-
 
 const PORT = 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));
@@ -139,4 +129,3 @@ app.listen(PORT, () => console.log(`Server listening to ${PORT}`));
 //     extended: false
 //   })
 // )
-

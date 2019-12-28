@@ -83,73 +83,101 @@ let Owner = mongoose.model("owner", owner);
 // _______________________________________________Check User Login
 let checkUserLogin = (callBack, userInfo) => {
   // shoud put if condition for role to serch in collection
+  console.log(userInfo);
 
-  if (userInfo.role === "trainee") {
-    Trainee.findOne(
-      {
-        email: userInfo.email,
-        password: userInfo.password,
-        role: userInfo.role
-      },
-      function(err, traineeInfo) {
-        if (err) {
-          console.log("ERR:", err);
-        } else {
-          console.log("DOCS trainee:", traineeInfo);
-          callBack(traineeInfo._id);
-        }
-      }
-    );
-  }
-  if (userInfo.role === "company") {
 
-    Companies.findOne(
-      {
+  Trainee.findOne({ 
+    email: userInfo.email,
+    password: userInfo.password
+  }, (error, trainee_response) => {
+    if (error) {
+      console.log(error);
+    } else if (trainee_response != null) {
+      callBack(trainee_response._id,trainee_response.role);
+      console.log("CHECKUSER TRAINEE",callBack)
+    } else  {
+      Companies.findOne({ 
         email: userInfo.email,
-        password: userInfo.password,
-        role: userInfo.role
-      },
-      function(err, copmanyInfo) {
-        if (err) {
-          
-          console.log("ERR:", err);
-        } else {
-          
-          console.log("DOCS Company:", copmanyInfo._id);
-          callBack(copmanyInfo._id);
+        password:userInfo.password
+       }, (error, company_response) => {
+        if (error) {
+          callBack('User Dosent exists ',null)
+        } else if(company_response !== null) {
+          callBack(company_response._id , company_response.role);
+        } else{
+          console.log("Not a User")
         }
-      }
-    );
-  }
+      });
+    }
+  });
+
+
+
+
+
+
+
+//_______________________________________ OLD CODE 
+
+  // if (userInfo.role === "trainee") {
+  //   Trainee.findOne(
+  //     {
+  //       email: userInfo.email,
+  //       password: userInfo.password,
+  //       role: userInfo.role
+  //     },
+  //     function(err, traineeInfo) {
+  //       if (err) {
+  //         console.log("ERR:", err);
+  //       } else {
+  //         console.log("DOCS trainee:", traineeInfo);
+  //         callBack(traineeInfo._id);
+  //       }
+  //     }
+  //   );
+  // }
+  // if (userInfo.role === "company") {
+  //   Companies.findOne(
+  //     {
+  //       email: userInfo.email,
+  //       password: userInfo.password,
+  //       role: userInfo.role
+  //     },
+  //     function(err, copmanyInfo) {
+  //       if (err) {
+  //         console.log("ERR:", err);
+  //       } else {
+  //         console.log("DOCS Company:", copmanyInfo._id);
+  //         callBack(copmanyInfo._id);
+  //       }
+  //     }
+  //   );
+  // }
 };
 
 let getTrainee = cb => {
-  // console.log("INNER GET TRAINEE >>>>>>>>");
   Trainee.find({}, function(err, docs) {
     if (err) {
       console.log("ERR:", err);
       cb(err);
     } else {
-      console.log("DOCS FROM getTrainee:", docs);
       cb(docs);
     }
   });
 };
 
 let getCompany = cb => {
-  console.log("INNER GET Company>>>>>>>>");
   Companies.find({}, function(err, docs) {
     if (err) {
       console.log("ERR:", err);
       cb(err);
     } else {
-      console.log("DOCS FROM get company:", docs);
       cb(docs);
     }
   });
 };
 
-let registTrainee = (cb, box) => {
+let registTrainee = (callBack, box) => {
   Trainee.insertMany(
     [
       {
@@ -167,12 +195,12 @@ let registTrainee = (cb, box) => {
       if (err) {
         console.log("ERR:", err);
       }
-      getTrainee(cb);
+      getTrainee(callBack);
     }
   );
 };
 
-let registCompany = (cb, box) => {
+let registCompany = (callBack, box) => {
   Companies.insertMany(
     [
       {
@@ -192,29 +220,24 @@ let registCompany = (cb, box) => {
       if (err) {
         console.log("ERR:", err);
       }
-      console.log("NEWrecooooooooord:", New);
-      getCompany(cb);
+      getCompany(callBack);
     }
   );
 };
 
 // _______Get user object after login
 let getUser = (callBack, id) => {
-  console.log("id", id);
-
   Trainee.findOne({ _id: id }, (error, trainee_response) => {
     if (error) {
       console.log(error);
     } else if (trainee_response != null) {
       callBack(trainee_response);
-      // console.log("DB getUse Trainee >>>>>>>>>>>", trainee_response);
     } else {
       Companies.findOne({ _id: id }, (error, company_response) => {
         if (error) {
           console.log(error);
         } else {
           callBack(company_response);
- 
         }
       });
     }
@@ -222,79 +245,22 @@ let getUser = (callBack, id) => {
 };
 
 let profileInfo = (callBack, id) => {
-  // console.log("id DB ////", id);
-  console.log("callBack", id);
-
-
-  // Trainee.count({_id:id}, function(error, trainee_info){
-  //   console.log(count)
-  //   if(count>0){
-  //     console.log("TRAINEE")
-  //     callBack(trainee_info)
-  //   } else if( error)
-  //   {
-  //     console.log(error)
-  //   }
-  //   else{
-
-  //     Companies.count({_id:id}, function(error,company_info){
-  //       console.log(count)
-  //       if(count>0){
-  //         console.log("COMPANYIES")
-  //         callBack(company_info)
-  //       } else if (error){
-  //         console.log(error)
-  //       }
-  //     })
-  //   }
-  // })  
-  // Trainee.count({})
-
-
   Trainee.findOne({ _id: id }, (error, trainee_info) => {
-    console.log("tranee Info", trainee_info)
-
     if (trainee_info !== null) {
-      // console.log(error);
-
-      console.log("tranee Info", trainee_info)
-
       callBack(trainee_info);
-
-    } else  {
-      console.log("FFFFFFFFFFFFFFFFFFF")
-      console.log(id)
+    } else {
       Companies.findOne({ _id: id }, (error, company_info) => {
-        if (company_info !==null) {
+        if (company_info !== null) {
           callBack(company_info);
-          console.log(company_info)
         } else {
           console.log(error);
-
-          // console.log("DB company profile COMPANY >>>>>>>>>>>", company_info);
         }
       });
     }
-    
   });
-  // Trainee.findOne({ _id: id }, (error, trainee_info) => {
-  //   if (error) {
-  //     console.log(error);
-  //   } else if (trainee_info != null) {
-  //     callBack(trainee_info);
-  //     // console.log("DB trainee profile Trainee >>>>>>>>>>>", trainee_info);
-  //   } else {
-  //     Companies.findOne({ _id: id }, (error, company_info) => {
-  //       if (error) {
-  //         console.log(error);
-  //       } else {
-  //         callBack(company_info);
-  //         // console.log("DB company profile COMPANY >>>>>>>>>>>", company_info);
-  //       }
-  //     });
-  //   }
-  // });
 };
+
+
 
 let addPost = (callBack, newPost, id) => {
   Companies.update(
@@ -304,88 +270,98 @@ let addPost = (callBack, newPost, id) => {
       if (error) {
         console.log("Error");
       } else {
-        console.log("newPost",newPost)
         callBack(newPost);
-        console.log("callBAck",response)
       }
     }
   );
 };
 
-let companyPosts = (callBack , id)=>{
-  // console.log("DATA BASE COPMANY POST " ,);
-
-  Companies.findOne({_id : id }, (error , companyPosts)=>{
-    if(error){
-      console.log(error)
+let companyPosts = (callBack, id) => {
+  Companies.findOne({ _id: id }, (error, companyPosts) => {
+    if (error) {
+      console.log(error);
     } else {
-
       console.log("DB companyPost", companyPosts.post);
 
       callBack(companyPosts.post);
     }
-  })
+  });
+};
 
-}
+let allPosts = (callBack, id) => {
+  // const companies = await Companies.find({})
+  // companies.forEach(company =>{
+  //   compMap[company._id]= company
+  // })
+};
 
-let EditTraineeProfile = (callBack ,newInfo ,trainee_id)=>{
-  console.log("newInfo Database", newInfo)
+let EditTraineeProfile = (callBack, newInfo, trainee_id) => {
+  console.log("newInfo Database", newInfo);
   Trainee.updateMany(
-    {_id:trainee_id},
-    {$set :{
-      fullName: newInfo.fullName,
-      email: newInfo.email,
-      password:newInfo.password,
-      gender: newInfo.gender,
-      img_path: newInfo.img_path,
-      university:newInfo.university,
-      field:newInfo.field
-    }},
-    (error, response)=>{
-      if(error){
-        console.log(error)
+    { _id: trainee_id },
+    {
+      $set: {
+        fullName: newInfo.fullName,
+        email: newInfo.email,
+        password: newInfo.password,
+        gender: newInfo.gender,
+        img_path: newInfo.img_path,
+        university: newInfo.university,
+        field: newInfo.field
+      }
+    },
+    (error, response) => {
+      if (error) {
+        console.log(error);
       } else {
-        console.log("response from DB",response)
+        console.log("response from DB", response);
         callBack(newInfo);
       }
     }
-  )
+  );
+};
 
-}
-
-let deletePost = (callBack , id_company , id_post)=>{
-
-  Companies.find({_id :id_company}, (error , Doc)=>{
-    if(error){
-      console.log("ERROR")
-    } else {
-      Doc[0].post = Doc[0].post.filter(post =>{
-        return id_post !== post.id;
-      })
-      Doc[0].save(()=>{
-        callBack(id_company);
-      })
+let EditCompanyProfile = (callBack, newInfo, company_id) => {
+  console.log("newInfo", newInfo);
+  Companies.updateMany(
+    { _id: company_id },
+    {
+      $set: {
+        companyName: newInfo.companyName,
+        email: newInfo.email,
+        password: newInfo.password,
+        website: newInfo.website,
+        city: newInfo.city,
+        location: newInfo.location,
+        comp_description: newInfo.comp_description
+        // img_path:
+      }
+    },
+    (error, response) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("response from DB", response);
+        callBack(newInfo);
+      }
     }
-  })
-}
+  );
+};
 
-
-
-// let editOne = ( cb , ID )=>{
-  
-//   console.log('edit :', ID);
-
-//    Tasks.findById(ID , (x,y)=>{
-//     let updateStatus = !y.isCompleted;
-
-//     Tasks.updateOne({_id:ID},{ isCompleted: updateStatus},(err,Edit)=>{
-//       if(err){console.log(err);}
-//       console.log('Edit', Edit)
-//       getTasks(cb)
-//     })
-//   })
-
-// }
+let deletePost = (callBack, id_company, id_post) => {
+  Companies.find({ _id: id_company }, (error, Doc) => {
+    if (error) {
+      console.log("ERROR");
+    } else {
+      Doc[0].post = Doc[0].post.filter(post => {
+        return id_post !== post.id;
+      });
+      Doc[0].save(() => {
+        callBack(id_company);
+      });
+    }
+  });
+};
 
 module.exports = {
   checkUserLogin,
@@ -398,5 +374,7 @@ module.exports = {
   addPost,
   companyPosts,
   deletePost,
-  EditTraineeProfile
+  EditTraineeProfile,
+  EditCompanyProfile,
+  allPosts
 };

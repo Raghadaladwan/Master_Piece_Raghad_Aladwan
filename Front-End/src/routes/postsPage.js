@@ -23,20 +23,31 @@ class postsPage extends Component {
 
           // AXIOS to get back company post
           //
+    this.getPost();
+
         }
         if (response.data.role === "trainee") {
           this.setState({
             Trainee_Info: response.data
           });
+    this.getAllPosts();
+
         }
       })
       .catch(() => {
         console.log("ERROR");
       });
 
-    this.getPost();
 
     // another axios to git posts
+  }
+
+  getAllPosts =() =>{
+    axios
+    .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")}`)
+    .then(response =>{
+      this.setState({ post : response.data})
+    })
   }
 
   getPost = () => {
