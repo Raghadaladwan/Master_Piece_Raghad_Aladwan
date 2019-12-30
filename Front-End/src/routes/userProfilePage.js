@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
-import { async } from "@firebase/util";
 
 class userProfilePage extends Component {
   state = {
@@ -13,34 +12,19 @@ class userProfilePage extends Component {
   };
 
   componentDidMount() {
-    console.log("this profile page userID", this.state.userid);
     axios
       .get(`http://localhost:9000/profile/${this.state.userid}`)
       .then(response => {
-        if(response.data.role === "trainee")
-        {
-          this.setState({ traineeInfo : response.data})
+        if (response.data.role === "trainee") {
+          this.setState({ traineeInfo: response.data });
         }
-        if(response.data.role === "company"){
+        if (response.data.role === "company") {
           this.setState({
             companyInfo: response.data
-          })
+          });
         }
-   
-      })
+      });
   }
-
-
-  // console.log(response.data)
-  // if (response.data.role === "trainee") 
-  // {
-  //   this.setState({ traineeInfo: response.data }
-  //   }
-  //  if(response.data.role === "company") {
-  //   this.setState({ companyInfo: response.data });
-  //   console.log("object")
-    
-  // } 
 
   edit_info = () => {
     this.setState({
@@ -50,7 +34,6 @@ class userProfilePage extends Component {
 
   updateTraineeInfo = async event => {
     event.preventDefault();
-    console.log("in Update");
 
     const newTraineeInfo = {
       fullName: this.refs.fullName.value,
@@ -59,7 +42,7 @@ class userProfilePage extends Component {
       password: this.refs.password.value,
       university: this.uniType.value,
       gender: this.state.traineeInfo.gender,
-      img_path:this.state.traineeInfo.img_path
+      img_path: this.state.traineeInfo.img_path
     };
     this.setState({
       isInEdit: false
@@ -75,16 +58,14 @@ class userProfilePage extends Component {
           traineeInfo: response.data
         });
       });
-
-    console.log("this.state", this.state.traineeInfo);
   };
 
-  updateCompanyInfo = async event=>{
-    console.log(this.state.companyInfo)
+  updateCompanyInfo = async event => {
+    console.log(this.state.companyInfo);
 
     event.preventDefault();
 
-    const newCompanyInfo ={
+    const newCompanyInfo = {
       companyName: this.refs.name.value,
       email: this.refs.email.value,
       password: this.refs.password.value,
@@ -93,39 +74,32 @@ class userProfilePage extends Component {
       location: this.refs.location.value,
       comp_description: this.refs.comp_description.value,
       img_path: this.state.companyInfo.img_path
-      
-
-    }
+    };
     this.setState({
       isInEdit: false
     });
-    console.log("newComp Info", newCompanyInfo)
 
     await axios
-    .put(
-      `http://localhost:9000/EditCompanyProfile/${this.state.userid}`,
-      newCompanyInfo
-    )
+      .put(
+        `http://localhost:9000/EditCompanyProfile/${this.state.userid}`,
+        newCompanyInfo
+      )
 
-    .then(response => {
-      this.setState({
-        companyInfo: response.data
+      .then(response => {
+        this.setState({
+          companyInfo: response.data
+        });
       });
-    });
-
-  console.log("this.state", this.state.companyInfo);
-};
-
-  
-
+  };
 
   renderEditTraineeView = () => {
     return (
       <div className="container">
         <div>
-          <form 
-          onSubmit={this.updateTraineeInfo}
-          ref={form => this.form = form}>
+          <form
+            onSubmit={this.updateTraineeInfo}
+            ref={form => (this.form = form)}
+          >
             <h1 className="h3 mb-3 font-weight-normal">
               {" "}
               Edit your Information{" "}
@@ -170,7 +144,9 @@ class userProfilePage extends Component {
                 </option>
                 <option value="Yarmouk University">Yarmouk University</option>
 
-                <option value="Al al-Bayt University">Al al-Bayt University</option>
+                <option value="Al al-Bayt University">
+                  Al al-Bayt University
+                </option>
                 <option value="JUST University">JUST University</option>
               </select>
             </div>
@@ -240,24 +216,21 @@ class userProfilePage extends Component {
           ></img>
         </div>
       </div>
-
-
-
     );
   };
 
-  renderEditCompanyInfo =()=>{
+  renderEditCompanyInfo = () => {
     return (
       <div className="container">
         <div>
-          <form 
-          onSubmit={this.updateCompanyInfo}
-          ref={form => this.form = form}>
+          <form
+            onSubmit={this.updateCompanyInfo}
+            ref={form => (this.form = form)}
+          >
             <h1 className="h3 mb-3 font-weight-normal">
-       
               Edit your Information
             </h1>
-     
+
             <div className="form-group">
               <label>Company Name : </label>
               <input
@@ -313,7 +286,7 @@ class userProfilePage extends Component {
               />
             </div>
             <div className="form-group">
-              <label>About Company  : </label>
+              <label>About Company : </label>
               <textarea
                 type="password"
                 name="comp_description"
@@ -328,21 +301,25 @@ class userProfilePage extends Component {
           </form>
         </div>
       </div>
-    )
-  }
+    );
+  };
   renderDefaultCompanyView = () => {
     return (
       <div>
-        
-         <div onDoubleClick={this.edit_info}>
+        <div onDoubleClick={this.edit_info}>
           <span>Company Name : </span>
           {this.state.companyInfo.name}
         </div>
         <div onDoubleClick={this.edit_info}>
           <span>Website : </span>
-         <a 
-         href={this.state.companyInfo.website}  
-         target="_blank"> {this.state.companyInfo.website}</a>
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href={this.state.companyInfo.website}
+          >
+            {" "}
+            {this.state.companyInfo.website}
+          </a>
         </div>
         <div onDoubleClick={this.edit_info}>
           <span>City: </span>
@@ -366,57 +343,29 @@ class userProfilePage extends Component {
             style={{ width: 150, height: 150 }}
             src={this.state.companyInfo.img_path}
           ></img>
-        </div> 
-       </div>
+        </div>
+      </div>
     );
   };
 
-
-
-
   render() {
     const { traineeInfo, companyInfo } = this.state;
-    if (cookie.load("isLoggedIn") === undefined) {
+    if (this.state.userid === undefined) {
       return <div> You Can't View this</div>;
     }
 
     if (traineeInfo !== null) {
       return this.state.isInEdit
         ? this.renderEditTraineeView()
-        : this.renderDefaultTraineeInfo()
+        : this.renderDefaultTraineeInfo();
     }
-if(companyInfo !== null){
-  return this.state.isInEdit
-  ? this.renderEditCompanyInfo()
-  : this.renderDefaultCompanyView()
-}
-    
-    return<div>company</div>
-  //   if (companyInfo !== null) {
-  // return<div>company</div>
-      // return (
-      //   <div>
-      //     <div>{companyInfo.email}</div>
-      //     <div>{companyInfo.city}</div>
-      //     <div>
-      //       <img
-      //         alt=""
-      //         style={{ width: 150, height: 150 }}
-      //         src={companyInfo.img_path}
-      //       ></img>
-      //     </div>
-      //     <div>{companyInfo.location}</div>
-      //     <div>{companyInfo.name}</div>
-      //     <div>{companyInfo.website}</div>
-      //     <div>
-      //       <button onClick={edit_company_info}>Edit</button>
-      //     </div>
-      //   </div>
-      // );
-    // }
+    if (companyInfo !== null) {
+      return this.state.isInEdit
+        ? this.renderEditCompanyInfo()
+        : this.renderDefaultCompanyView();
+    }
 
-    // return <div>Out if</div>;
-    // return<div>{userProfile.email}</div>
+    return <div></div>;
   }
 }
 

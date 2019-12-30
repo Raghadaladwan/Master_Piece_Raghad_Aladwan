@@ -98,11 +98,60 @@ app.get("/copmany_posts/:id", (req, res) => {
   }, req.params.id);
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Id => 5df9f798e572ba744031007f
 app.get('/all_posts/:id',(req,res)=>{
+  // console.log("iner server", req.body)
   DB.allPosts(result=>{
     res.json(result)
   }, req.params.id)
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
   // console.log("CALL BACK FROM SERVER  DELETE");

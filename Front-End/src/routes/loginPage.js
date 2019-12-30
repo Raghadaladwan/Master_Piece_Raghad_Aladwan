@@ -24,7 +24,7 @@ export default class loginPage extends Component {
     await axios
       .post("http://localhost:9000/loginUser", {
         email: this.state.email,
-        password: this.state.password,
+        password: this.state.password
       })
       .then(response => {
         console.log(response);
@@ -36,9 +36,7 @@ export default class loginPage extends Component {
           this.setState({ massage: "wrong E-mail or password" });
         }
       })
-      .catch(
-        this.setState({ massage:"Wrong Email or password"})
-      );
+      .catch(this.setState({ massage: "Wrong Email or password" }));
   };
 
   render() {
@@ -49,12 +47,7 @@ export default class loginPage extends Component {
       return <div></div>;
     } else {
       return (
-        <div>
-          <h1 style={{ textAlign: "center", marginTop: "100px" }}>
-            <span></span>
-            Login Form
-          </h1>
-
+        <div className="form-group">
           <div
             style={{
               boxShadow: "0 4px 8px 0 rgba(0,0,0,0.8)",
@@ -70,6 +63,7 @@ export default class loginPage extends Component {
                 <h3> Email</h3>
               </label>
               <input
+                className="form-control"
                 type="text"
                 placeholder="Enter E-Mail"
                 name="email"
@@ -82,6 +76,7 @@ export default class loginPage extends Component {
                 <h3> Password</h3>
               </label>
               <input
+                className="form-control"
                 type="password"
                 onChange={changeInput}
                 value={password}
@@ -89,21 +84,9 @@ export default class loginPage extends Component {
                 name="password"
                 required
               />
+              <br />
 
-              <button
-                onClick={checkUserinfo}
-                style={{
-                  backgroundColor: "#622556",
-                  color: "white",
-                  fontWeight: "bolder",
-                  marginTop: "50px",
-
-                  marginLeft: "40.5%",
-                  height: "50px",
-                  width: "20%"
-                }}
-                className="btn"
-              >
+              <button onClick={checkUserinfo} className="btn btn-info">
                 Login
               </button>
             </div>

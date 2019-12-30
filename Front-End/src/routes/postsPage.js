@@ -21,34 +21,35 @@ class postsPage extends Component {
         if (response.data.role === "company") {
           this.setState({ comp_info: response.data }, () => {});
 
-          // AXIOS to get back company post
-          //
-    this.getPost();
-
+          this.getPost();
         }
         if (response.data.role === "trainee") {
           this.setState({
             Trainee_Info: response.data
           });
-    this.getAllPosts();
-
+          
+          this.getAllPosts();
         }
       })
       .catch(() => {
         console.log("ERROR");
       });
 
-
     // another axios to git posts
   }
+  //______________________________________________________WOrking here
 
-  getAllPosts =() =>{
+  getAllPosts = () => {
+    console.log("Trainee field", this.state.Trainee_Info.field);
+
+    // i Want to send the field too
     axios
-    .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")}`)
-    .then(response =>{
-      this.setState({ post : response.data})
-    })
-  }
+      .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")}`)
+      .then(response => {
+        // console.log("response all post", response.data[0].post[0]);
+        this.setState({ post: response.data });
+      });
+  };
 
   getPost = () => {
     axios
@@ -58,15 +59,14 @@ class postsPage extends Component {
       });
   };
 
-
-
   addPost = event => {
     event.preventDefault();
     let newPost = {
       field: event.target["field"].value,
       job_description: event.target["job_description"].value,
       from_Date: event.target["from_Date"].value,
-      to_Date: event.target["to_Date"].value
+      to_Date: event.target["to_Date"].value,
+      // img_path: this.state.comp_info.img_path
     };
 
     if (newPost.field === "") {
@@ -83,14 +83,13 @@ class postsPage extends Component {
         )
         .then(({ data }) => {
           console.log(data);
-          this.setState({post: data})
-        })
+          this.setState({ post: data });
+        });
     }
     this.getPost();
-    
   };
 
-  // *** After adding the post it doesn't Appear directly *****
+  // ********************************* After adding the post it doesn't Appear directly *****
 
   render() {
     const { addPost, deletePost } = this;
@@ -156,6 +155,7 @@ class postsPage extends Component {
                 deletePost={deletePost}
                 userid={this.state.userid}
                 getPost={this.getPost}
+                role={this.state.comp_info.role}
               />
             );
           })}
@@ -164,7 +164,15 @@ class postsPage extends Component {
     } else {
       return (
         <div>
-          <h1>fetch all post for Trainee</h1>
+          <h3 style={{ color: "red" }}>fetch all post for Trainee</h3>
+          {/* {this.state.post.map(post => {
+            return (
+              <PostComponent
+                key={post._id}
+                post={post}
+              />
+            );
+          })} */}
         </div>
       );
     }

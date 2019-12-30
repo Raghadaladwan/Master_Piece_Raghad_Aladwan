@@ -5,6 +5,29 @@ class landingPage extends Component {
   render() {
     return (
       <div className="container">
+        <div  id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+          <div className="carousel-inner">
+            <div className="carousel-item active">
+              <img className="d-block w-100" alt="" src="slider2.jpeg"></img>
+            </div>
+            <div className="carousel-item ">
+              <img className="d-block w-100" alt="" src="slider1.jpeg"></img>
+            </div>
+            <div className="carousel-item">
+              <img className="d-block w-100" alt="" src="slider3.jpeg"></img>
+            </div>
+
+          </div>
+
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+        </div>
         <h1>landingPage</h1>
         <div>
           <h1>Slider</h1>
@@ -37,19 +60,10 @@ class landingPage extends Component {
           </div>
         </div>
 
-
-<div>
-
-</div>
-<div>
-  <p>
-    3 image
-  </p>
-</div>
-
-
-
-
+        <div></div>
+        <div>
+          <p>3 image</p>
+        </div>
       </div>
     );
   }

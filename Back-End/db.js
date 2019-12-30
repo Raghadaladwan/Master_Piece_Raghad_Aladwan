@@ -232,6 +232,8 @@ let getUser = (callBack, id) => {
       console.log(error);
     } else if (trainee_response != null) {
       callBack(trainee_response);
+
+      // shold CallBack trainee id , role , field JUST
     } else {
       Companies.findOne({ _id: id }, (error, company_response) => {
         if (error) {
@@ -288,7 +290,44 @@ let companyPosts = (callBack, id) => {
   });
 };
 
+
+
+
+
+
+
+
+
+
 let allPosts = (callBack, id) => {
+  console.log("DB all Posts ID user", id)
+  Companies.find({} , {post:[]},function(error, allPosts ){
+    if(error){
+      console.log("ERROR")
+    } else {
+console.log(callBack)
+      callBack(allPosts);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  })
   // const companies = await Companies.find({})
   // companies.forEach(company =>{
   //   compMap[company._id]= company
