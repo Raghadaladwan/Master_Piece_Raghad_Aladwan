@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import { withRouter, Link } from "react-router-dom";
 class postComponent extends Component {
   state = {};
 
@@ -19,9 +19,13 @@ class postComponent extends Component {
         console.log(error);
       });
   };
-  aboutCompany = id =>{
-    console.log("About Company Shold go to POST PAGE ")
-  }
+  aboutCompany =() => {
+  
+    
+  
+    // console.log("About Company Shold go to POST PAGE ")
+    this.props.history.push("/PostPage", {Id:this.props.post._id});
+  };
 
   renderCopmanyPosts = () => {
     return (
@@ -46,7 +50,7 @@ class postComponent extends Component {
             {this.props.post.to_Date}
           </h4>
           <div>
-            <button onClick={this.deletePost}>delete</button>
+            <button onClick={this.deletePost.bind(this)}>delete</button>
           </div>
         </div>
       </div>
@@ -54,39 +58,45 @@ class postComponent extends Component {
   };
 
   renderTraineePosts = () => {
-    return(
-    <div className="container">
-      <h5>post COMPONENT Trainee</h5>
+    
+    return (
+      <div className="container">
+        <h5>post COMPONENT Trainee</h5>
 
-      <div>
-        <h4>
-          post image
-          <img
-            src={this.props.image}
-            style={{ width: 150, height: 150 }}
-            alt=""
-          ></img>
-        </h4>
-        <h4>Field :{this.props.post.field}</h4>
-
-        <h3></h3>
-        <h4>Job Descripthion : {this.props.post.job_description}</h4>
-        <h4>
-          From Date :{this.props.post.from_Date}<br/>
-          To Date:{this.props.post.to_Date}
-        </h4>
         <div>
-          <button  className="btn btn-info" onClick={this.aboutCompany}>More About Company</button>
+          <h4>
+            post image
+            <img
+              src={this.props.post.img_path}
+              style={{ width: 150, height: 150 }}
+              alt=""
+            ></img>
+          </h4>
+          <h4>Field :{this.props.post.field}</h4>
+
+          <h3></h3>
+          <h4>Job Descripthion : {this.props.post.job_description}</h4>
+          <h4>
+            From Date :{this.props.post.from_Date}
+            <br />
+            To Date:{this.props.post.to_Date}
+          </h4>
+          <div>
+            <button className="btn btn-info" onClick={this.aboutCompany}>
+              More About Company
+            </button>
+          </div>
         </div>
       </div>
-    </div>);
+    );
   };
 
   render() {
-    return this.props.role 
-    ? this.renderCopmanyPosts() 
-    : this.renderTraineePosts()
+    return this.props.role
+      ? this.renderCopmanyPosts()
+      : this.renderTraineePosts();
   }
 }
 
-export default postComponent;
+export default withRouter(postComponent);
+// export default  postComponent;

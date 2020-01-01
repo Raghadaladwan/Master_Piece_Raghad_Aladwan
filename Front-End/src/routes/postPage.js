@@ -4,7 +4,9 @@ class postPage extends Component {
   state = {};
   
   render() {
-    return <div>single postPage</div>;
+    return <div>single postPage
+      <h4>Object Company</h4>
+    </div>;
   }
 }
 

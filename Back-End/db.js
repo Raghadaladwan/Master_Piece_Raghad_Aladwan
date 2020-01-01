@@ -57,8 +57,8 @@ let companies = new mongoose.Schema({
       img_path: String,
       job_description: String,
       field: String,
-      from_Date: Date,
-      to_Date: Date,
+      from_Date: String,
+      to_Date: String,
       comments: [{ body: String }]
     }
   ]
@@ -85,39 +85,38 @@ let checkUserLogin = (callBack, userInfo) => {
   // shoud put if condition for role to serch in collection
   console.log(userInfo);
 
-
-  Trainee.findOne({ 
-    email: userInfo.email,
-    password: userInfo.password
-  }, (error, trainee_response) => {
-    if (error) {
-      console.log(error);
-    } else if (trainee_response != null) {
-      callBack(trainee_response._id,trainee_response.role);
-      console.log("CHECKUSER TRAINEE",callBack)
-    } else  {
-      Companies.findOne({ 
-        email: userInfo.email,
-        password:userInfo.password
-       }, (error, company_response) => {
-        if (error) {
-          callBack('User Dosent exists ',null)
-        } else if(company_response !== null) {
-          callBack(company_response._id , company_response.role);
-        } else{
-          console.log("Not a User")
-        }
-      });
+  Trainee.findOne(
+    {
+      email: userInfo.email,
+      password: userInfo.password
+    },
+    (error, trainee_response) => {
+      if (error) {
+        console.log(error);
+      } else if (trainee_response != null) {
+        callBack(trainee_response._id, trainee_response.role);
+        console.log("CHECKUSER TRAINEE", callBack);
+      } else {
+        Companies.findOne(
+          {
+            email: userInfo.email,
+            password: userInfo.password
+          },
+          (error, company_response) => {
+            if (error) {
+              callBack("User Dosent exists ", null);
+            } else if (company_response !== null) {
+              callBack(company_response._id, company_response.role);
+            } else {
+              console.log("Not a User");
+            }
+          }
+        );
+      }
     }
-  });
+  );
 
-
-
-
-
-
-
-//_______________________________________ OLD CODE 
+  //_______________________________________ OLD CODE
 
   // if (userInfo.role === "trainee") {
   //   Trainee.findOne(
@@ -225,7 +224,7 @@ let registCompany = (callBack, box) => {
   );
 };
 
-// _______Get user object after login
+// ______________Get user object after login
 let getUser = (callBack, id) => {
   Trainee.findOne({ _id: id }, (error, trainee_response) => {
     if (error) {
@@ -262,8 +261,6 @@ let profileInfo = (callBack, id) => {
   });
 };
 
-
-
 let addPost = (callBack, newPost, id) => {
   Companies.update(
     { _id: id },
@@ -290,48 +287,30 @@ let companyPosts = (callBack, id) => {
   });
 };
 
-
-
-
-
-
-
-
-
-
 let allPosts = (callBack, id) => {
-  console.log("DB all Posts ID user", id)
-  Companies.find({} , {post:[]},function(error, allPosts ){
-    if(error){
-      console.log("ERROR")
-    } else {
-console.log(callBack)
-      callBack(allPosts);
+  console.log("DB all Posts ID user", id);
+  Companies.aggregate(
+    [
+      { $match: {} },
+      { $unwind: "$post" },
+      {
+        $group: {
+          _id: "$_id",
+          post: { $push: "$post" }
+        }
+      }
+
+      // {$sort : { total : -1}}
+    ],
+    function(error, allPosts) {
+      if (error) {
+        console.log("ERROR");
+      } else {
+        console.log('ALL POOOOOOOOST.Post',allPosts);
+        callBack(allPosts);
+      }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  })
-  // const companies = await Companies.find({})
-  // companies.forEach(company =>{
-  //   compMap[company._id]= company
-  // })
+  );
 };
 
 let EditTraineeProfile = (callBack, newInfo, trainee_id) => {

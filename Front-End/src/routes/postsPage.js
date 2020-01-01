@@ -27,7 +27,7 @@ class postsPage extends Component {
           this.setState({
             Trainee_Info: response.data
           });
-          
+
           this.getAllPosts();
         }
       })
@@ -37,16 +37,16 @@ class postsPage extends Component {
 
     // another axios to git posts
   }
-  //______________________________________________________WOrking here
+  //____________________________________________WOrking here
 
   getAllPosts = () => {
     console.log("Trainee field", this.state.Trainee_Info.field);
-
+    // **************************i want to send the field with http
     // i Want to send the field too
     axios
       .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")}`)
       .then(response => {
-        // console.log("response all post", response.data[0].post[0]);
+        console.log("resp", response.data);
         this.setState({ post: response.data });
       });
   };
@@ -66,7 +66,7 @@ class postsPage extends Component {
       job_description: event.target["job_description"].value,
       from_Date: event.target["from_Date"].value,
       to_Date: event.target["to_Date"].value,
-      // img_path: this.state.comp_info.img_path
+      img_path: this.state.comp_info.img_path
     };
 
     if (newPost.field === "") {
@@ -105,13 +105,27 @@ class postsPage extends Component {
             <div>
               <form onSubmit={addPost}>
                 <div className="form-group">
-                  <label htmlFor="field">Field</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="field"
-                    placeholder="field"
-                  />
+                  <div className="form-group">
+                    <label htmlFor="field">Field</label>
+                    <select
+                      className=" form-control sm-control"
+                      name="field"
+                      style={{ marginTop: "5px" }}
+                    >
+                      <option value="DEFAULT" disabled hidden>
+                        Field
+                      </option>
+                      <option className="dropdown-item" name="IT" value="IT">
+                        IT
+                      </option>
+                      <option value="Engineering" name="Engineering">
+                        Engineering
+                      </option>
+                      <option value="Economy" name="Economy">
+                        Economy
+                      </option>
+                    </select>
+                  </div>
                 </div>
                 <div className="md-form amber-textarea active-amber-textarea">
                   <label htmlFor="job_description">Job Description :</label>
@@ -165,14 +179,18 @@ class postsPage extends Component {
       return (
         <div>
           <h3 style={{ color: "red" }}>fetch all post for Trainee</h3>
-          {/* {this.state.post.map(post => {
+          {this.state.post.map(companyId => {
             return (
-              <PostComponent
-                key={post._id}
-                post={post}
-              />
+              <div key={companyId._id}>
+                {companyId.post.map(innerPost => {
+                  return <PostComponent key={innerPost._id} 
+                  post={innerPost}
+                  companyId={companyId}
+                   />;
+                })}
+              </div>
             );
-          })} */}
+          })}
         </div>
       );
     }
