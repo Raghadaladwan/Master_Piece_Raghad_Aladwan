@@ -156,7 +156,6 @@ class postsPage extends Component {
                 <button type="submit" className="btn btn-primary">
                   Add Post
                 </button>
-                {/* <div>{this.state.text}</div> */}
               </form>
             </div>
           </div>
@@ -185,7 +184,7 @@ class postsPage extends Component {
                 {companyId.post.map(innerPost => {
                   return <PostComponent key={innerPost._id} 
                   post={innerPost}
-                  companyId={companyId}
+                  companyId={companyId._id}
                    />;
                 })}
               </div>

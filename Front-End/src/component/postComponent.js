@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 class postComponent extends Component {
   state = {};
 
@@ -20,11 +20,20 @@ class postComponent extends Component {
       });
   };
   aboutCompany =() => {
-  
-    
-  
+    console.log("Post Component",this.props.companyId);
+    console.log("Post Component POSTID",this.props.post._id);
+
+    //*********************************Should talk with it post */
+    // post 5e0ce9c2fcc9ed42b6b96180
     // console.log("About Company Shold go to POST PAGE ")
-    this.props.history.push("/PostPage", {Id:this.props.post._id});
+
+this.props.history.push({
+  pathname : "/PostPage",
+  state:{
+    _id:this.props.companyId,
+    postId:this.props.post._id
+  }
+})
   };
 
   renderCopmanyPosts = () => {
@@ -43,7 +52,7 @@ class postComponent extends Component {
           </h4>
           <h4>post field {this.props.post.field}</h4>
 
-          <h3></h3>
+        
           <h4>post Job Descripthion {this.props.post.job_description}</h4>
           <h4>
             from Date {this.props.post.from_Date} to Date
@@ -74,7 +83,6 @@ class postComponent extends Component {
           </h4>
           <h4>Field :{this.props.post.field}</h4>
 
-          <h3></h3>
           <h4>Job Descripthion : {this.props.post.job_description}</h4>
           <h4>
             From Date :{this.props.post.from_Date}

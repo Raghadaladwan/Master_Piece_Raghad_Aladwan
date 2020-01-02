@@ -24,11 +24,11 @@ app.get("/", (req, res) => {
 // ____________________________________________Login User
 
 app.post("/loginUser", (request, res) => {
-  let email_Password_Role = request.body;
-  console.log(email_Password_Role);
+  let email_Password = request.body;
+  // console.log(email_Password);
   DB.checkUserLogin(user => {
     res.json(user);
-  }, email_Password_Role);
+  }, email_Password);
 });
 
 // ____________________________________________Trainee Register
@@ -59,7 +59,7 @@ app.get("/profile/:id", (req, res) => {
   }, req.params.id);
 });
 
-//________________________________ ADD GET Post
+//______________________________________ ADD GET Post
 
 app.put("/add_post/:id", (req, res) => {
   let box = req.body;
@@ -98,13 +98,20 @@ app.get("/copmany_posts/:id", (req, res) => {
   }, req.params.id);
 });
 
-// Id => 5df9f798e572ba744031007f
-app.get("/all_posts/:id", (req, res) => {
-  // console.log("iner server", req.body)
-  DB.allPosts(result => {
-    res.json(result);
-  }, req.params.id);
-});
+
+app.get('/all_posts/:id',(req,res)=>{
+  DB.allPosts(result=>{
+    res.json(result)
+  }, req.params.id)
+})
+
+app.post('/getCompanyInfo/:id',(req,res)=>{
+  DB.getCompanyInfo(result=>{
+    res.json(result)
+  }, req.params.id)
+
+})
+
 
 app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
   // console.log("CALL BACK FROM SERVER  DELETE");
@@ -118,6 +125,41 @@ app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
     req.params.id_post
   );
 });
+
+
+
+
+
+
+
+
+
+
+
+
+app.post("/traineeRequest/:id_trainee/:id_post", (req,res)=>{
+  console.log("Trainee",req.params.id_trainee)
+  console.log("post",req.params.id_post)
+  DB.newRequest(result=>{
+
+    res.json(result)
+  }, req.params.id_trainee, )
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const PORT = 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));

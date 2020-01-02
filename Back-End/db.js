@@ -115,43 +115,6 @@ let checkUserLogin = (callBack, userInfo) => {
       }
     }
   );
-
-  //_______________________________________ OLD CODE
-
-  // if (userInfo.role === "trainee") {
-  //   Trainee.findOne(
-  //     {
-  //       email: userInfo.email,
-  //       password: userInfo.password,
-  //       role: userInfo.role
-  //     },
-  //     function(err, traineeInfo) {
-  //       if (err) {
-  //         console.log("ERR:", err);
-  //       } else {
-  //         console.log("DOCS trainee:", traineeInfo);
-  //         callBack(traineeInfo._id);
-  //       }
-  //     }
-  //   );
-  // }
-  // if (userInfo.role === "company") {
-  //   Companies.findOne(
-  //     {
-  //       email: userInfo.email,
-  //       password: userInfo.password,
-  //       role: userInfo.role
-  //     },
-  //     function(err, copmanyInfo) {
-  //       if (err) {
-  //         console.log("ERR:", err);
-  //       } else {
-  //         console.log("DOCS Company:", copmanyInfo._id);
-  //         callBack(copmanyInfo._id);
-  //       }
-  //     }
-  //   );
-  // }
 };
 
 let getTrainee = cb => {
@@ -171,6 +134,7 @@ let getCompany = cb => {
       console.log("ERR:", err);
       cb(err);
     } else {
+      console.log("DOs", docs);
       cb(docs);
     }
   });
@@ -238,6 +202,7 @@ let getUser = (callBack, id) => {
         if (error) {
           console.log(error);
         } else {
+          console.log(company_response);
           callBack(company_response);
         }
       });
@@ -287,8 +252,33 @@ let companyPosts = (callBack, id) => {
   });
 };
 
+let getCompanyInfo = (callBack, id) => {
+  Companies.findOne({ _id: id }, (error, companyInfo) => {
+    if (error) {
+      console.log(error);
+    } else {
+        callBack(
+          // ********************* All things in CallBack WARNING
+          companyInfo
+          // companyInfo.name,
+          // companyInfo.email,
+          // companyInfo.website,
+          // companyInfo.img_path,
+          // companyInfo.city,
+          // companyInfo.comp_description,
+          // companyInfo.location
+        );
+    }
+  });
+};
+
+
+let newRequest =(callBack , id_trainee , id_post)=>{
+  console.log("INNER DB")
+}
+
+//*********************** SORT */
 let allPosts = (callBack, id) => {
-  console.log("DB all Posts ID user", id);
   Companies.aggregate(
     [
       { $match: {} },
@@ -306,7 +296,6 @@ let allPosts = (callBack, id) => {
       if (error) {
         console.log("ERROR");
       } else {
-        console.log('ALL POOOOOOOOST.Post',allPosts);
         callBack(allPosts);
       }
     }
@@ -394,5 +383,7 @@ module.exports = {
   deletePost,
   EditTraineeProfile,
   EditCompanyProfile,
-  allPosts
+  allPosts,
+  getCompanyInfo,
+  newRequest
 };
