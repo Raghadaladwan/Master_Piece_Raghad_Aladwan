@@ -3,7 +3,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 
-class postPage extends Component {
+class CompanyInfo extends Component {
   state = {};
 
   componentDidMount = () => {
@@ -93,4 +93,4 @@ class postPage extends Component {
   }
 }
 
-export default postPage;
+export default CompanyInfo;

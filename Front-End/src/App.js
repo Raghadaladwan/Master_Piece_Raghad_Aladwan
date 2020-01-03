@@ -7,7 +7,7 @@ import cookie from "react-cookies";
 //import routes
 import LandingPage from "./routes/landingPage";
 import PostsPage from "./routes/postsPage";
-import PostPage from "./routes/postPage";
+import CompanyInfo from "./routes/companyInfo";
 import UserProfilePage from "./routes/userProfilePage";
 import AdminDashBoardPage from "./routes/adminDashBoardPage";
 import AboutUsPage from "./routes/aboutUsPage";
@@ -53,7 +53,7 @@ class App extends React.Component {
             <Route path="/loginpage" component={LoginPage}></Route>
             <Route path="/registerpage" component={RegisterPage}></Route>
             <Route path="/postspage" component={PostsPage} ></Route>
-            <Route path="/PostPage" component={PostPage}></Route>
+            <Route path="/CompanyInfo" component={CompanyInfo}></Route>
             <Route path="/userprofile" component={UserProfilePage}></Route>
             <Route path="/aboutUs" component={AboutUsPage}></Route>
             <FooterComponent />

@@ -4,7 +4,9 @@ import cookie from "react-cookies";
 
 import { withRouter } from "react-router-dom";
 class postComponent extends Component {
-  state = {};
+  state = {
+
+  };
 
   deletePost = id_post => {
     // console.log("user id", this.props.userid);
@@ -35,7 +37,7 @@ class postComponent extends Component {
     // console.log("About Company Shold go to POST PAGE ")
 
 this.props.history.push({
-  pathname : "/PostPage",
+  pathname : "/CompanyInfo",
   state:{
     _id:this.props.companyId,
     postId:this.props.post._id
@@ -46,24 +48,9 @@ this.props.history.push({
 
 
 sendRequest = ()=>{
-  console.log("this.props.post._id",this.props.post._id)
-  console.log("UserID",cookie.load("isLoggedIn")._id)
-  console.log("COMPANY", this.props.companyId)
-
-
-  // requests:[
-  //   {
-  //     useID: String,
-  //     postID: String,
-  //     Accepted : Boolean
-
-  //   }
-
-  // ]
-    // axios
-  //     .post(
-  //     `http://localhost:9000/traineeRequest/${cookie.load("isLoggedIn")._id}/${this.props.companyId}/${this.props.post._id}`
-  //   )
+  // console.log("this.props.post._id",this.props.post._id)
+  // console.log("UserID",cookie.load("isLoggedIn")._id)
+  // console.log("COMPANY", this.props.companyId)
 
 
   let newRequest = {
@@ -79,11 +66,14 @@ sendRequest = ()=>{
     console.log("data from component post", data)
   })
 
+  this.refs.btn.setAttribute("disabled", "disabled");
+
+  // this.refs.btn.removeAttribute("disabled");
+
+
+  // disabled="disabled"
+
 }
-
-
-
-
 
   
 
@@ -144,7 +134,7 @@ sendRequest = ()=>{
             <button className="btn btn-info" onClick={this.aboutCompany}>
               More About Company
             </button>
-            <button className="btn btn-warning" onClick={this.sendRequest}>
+            <button ref="btn" className="btn btn-warning" onClick={this.sendRequest} >
               Send Request
             </button>
           </div>

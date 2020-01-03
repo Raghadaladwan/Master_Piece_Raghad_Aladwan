@@ -106,7 +106,6 @@ let checkUserLogin = (callBack, userInfo) => {
         console.log(error);
       } else if (trainee_response != null) {
         callBack(trainee_response);
-        // console.log("CHECKUSER TRAINEE", callBack);
       } else {
         Companies.findOne(
           {
@@ -120,10 +119,8 @@ let checkUserLogin = (callBack, userInfo) => {
               console.log("company from checkUserLogin",company_response)
               callBack(company_response);
             } else {
-              // let err = new Error("Not A User")
-              // err.statuscode="404"
+           
               callBack('Not a User')
-              // console.log("Not a User");
             }
           }
         );
@@ -309,8 +306,9 @@ let getCompanyInfo = (callBack, id) => {
 
 let newRequest =(callBack ,newRequest,id_company)=>{
   
-  console.log("IN DATA BASE ID",id_company)
-  console.log("IN DATA BASE REQUEST",newRequest)
+  // console.log("IN DATA BASE ID",id_company)
+  // console.log("IN DATA BASE REQUEST",newRequest)
+
 
   Companies.updateOne(
     {_id:id_company},
@@ -320,12 +318,12 @@ let newRequest =(callBack ,newRequest,id_company)=>{
         console.log("Error");
       } else {
         callBack(response);
+        console.log("Call back from new request",response);
         console.log("IN DATA BASE")
       }
     }
   )
-  // console.log("_id_tainner", id_trainee)
-  // console.log("INNER DB")
+
 }
 
 
@@ -360,12 +358,15 @@ let newRequest =(callBack ,newRequest,id_company)=>{
 
 
 
-//*********************** SORT */
-let allPosts = (callBack, id) => {
+//*********************** SORT  Field */
+let allPosts = (callBack, field , id) => {
+  console.log("DATABASE",field)
   Companies.aggregate(
     [
       { $match: {} },
       { $unwind: "$post" },
+      { $match: {"post.field":field.field} },
+      
       {
         $group: {
           _id: "$_id",

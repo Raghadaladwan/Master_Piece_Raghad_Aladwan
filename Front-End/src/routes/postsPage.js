@@ -40,11 +40,12 @@ class postsPage extends Component {
   //____________________________________________WOrking here
 
   getAllPosts = () => {
-    console.log("Trainee field", this.state.Trainee_Info.field);
-    // **************************i want to send the field with http
-    // i Want to send the field too
+    console.log("Trainee field", this.state.Trainee_Info.field)
+
+    const field=this.state.Trainee_Info.field
+
     axios
-      .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")._id}`)
+      .put(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")._id}`,{field})
       .then(response => {
         this.setState({ post: response.data });
       });
@@ -89,7 +90,6 @@ class postsPage extends Component {
 //************************ Clean the Form After adding data */
   };
 
-  // ********************************* After adding the post it doesn't Appear directly *****
 
   render() {
     const { addPost, deletePost } = this;

@@ -100,10 +100,14 @@ app.get("/copmany_posts/:id", (req, res) => {
 });
 
 
-app.get('/all_posts/:id',(req,res)=>{
+app.put('/all_posts/:id',(req,res)=>{
+  console.log("ALL POST ",req.body)
+  // console.log(field)
   DB.allPosts(result=>{
     res.json(result)
-  }, req.params.id)
+  }, 
+  req.body,
+  req.params.id)
 })
 
 app.post('/getCompanyInfo/:id',(req,res)=>{
