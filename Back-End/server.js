@@ -26,28 +26,30 @@ app.get("/", (req, res) => {
 app.post("/loginUser", (request, res) => {
   let email_Password = request.body;
   // console.log(email_Password);
-  DB.checkUserLogin(user => {
+  DB.checkUserLogin((user) => {
+    
     res.json(user);
   }, email_Password);
 });
 
 // ____________________________________________Trainee Register
 app.post("/traineeregister", (req, res) => {
-  let box = req.body.newUser;
-  DB.registTrainee(tr => {
-    res.json(tr);
-  }, box);
+  let newUser = req.body.newUser;
+  DB.registTrainee(response => {
+    res.json(response);
+  }, newUser);
 });
 
 app.post("/companyregister", (req, res) => {
-  let box = req.body.newCompany;
+  let newCompany = req.body.newCompany;
   DB.registCompany(response => {
     res.json(response);
-  }, box);
+  }, newCompany);
 });
 
 // __________________________________________Get Trainee
 app.get("/getUser/:id", (req, res) => {
+  console.log("req",req.params.id)
   DB.getUser(result => {
     res.json(result);
   }, req.params.id);
@@ -62,12 +64,11 @@ app.get("/profile/:id", (req, res) => {
 //______________________________________ ADD GET Post
 
 app.put("/add_post/:id", (req, res) => {
-  let box = req.body;
   DB.addPost(
     response => {
       res.send(response);
     },
-    box,
+    req.body,
     req.params.id
   );
 });
@@ -137,14 +138,31 @@ app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
 
 
 
-app.post("/traineeRequest/:id_trainee/:id_post", (req,res)=>{
-  console.log("Trainee",req.params.id_trainee)
-  console.log("post",req.params.id_post)
+
+
+
+
+
+app.post("/traineeRequest/:id_company", (req,res)=>{
+  // console.log(req.params.id_company)
+  // console.log('req.body', req.body)
   DB.newRequest(result=>{
 
     res.json(result)
-  }, req.params.id_trainee, )
+  }, 
+  req.body,
+  req.params.id_company 
+  
+  )
 })
+
+
+
+
+
+
+
+
 
 
 

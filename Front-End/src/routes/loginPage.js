@@ -26,17 +26,21 @@ export default class loginPage extends Component {
         email: this.state.email,
         password: this.state.password
       })
-      .then(response => {
-        console.log(response);
-        if (response.data != null) {
-          cookie.save("isLoggedIn", response.data);
+      .then(({ data }) => {
+        if (data !== "Not a User") {
+          cookie.save("isLoggedIn", data);
           this.props.history.push("/postspage");
           window.location.reload();
         } else {
-          this.setState({ massage: "wrong E-mail or password" });
+          this.setState({ massage: data });
         }
+
+        console.log("data :", data);
       })
-      .catch(this.setState({ massage: "Wrong Email or password" }));
+      .catch(error => {
+        console.log("error");
+      });
+  
   };
 
   render() {

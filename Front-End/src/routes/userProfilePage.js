@@ -13,7 +13,7 @@ class userProfilePage extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:9000/profile/${this.state.userid}`)
+      .get(`http://localhost:9000/profile/${this.state.userid._id}`)
       .then(response => {
         if (response.data.role === "trainee") {
           this.setState({ traineeInfo: response.data });
@@ -49,7 +49,7 @@ class userProfilePage extends Component {
     });
     await axios
       .put(
-        `http://localhost:9000/EditTraineeProfile/${this.state.userid}`,
+        `http://localhost:9000/EditTraineeProfile/${this.state.userid._id}`,
         newTraineeInfo
       )
 
@@ -66,7 +66,7 @@ class userProfilePage extends Component {
     event.preventDefault();
 
     const newCompanyInfo = {
-      companyName: this.refs.name.value,
+      name: this.refs.name.value,
       email: this.refs.email.value,
       password: this.refs.password.value,
       website: this.refs.website.value,
@@ -81,7 +81,7 @@ class userProfilePage extends Component {
 
     await axios
       .put(
-        `http://localhost:9000/EditCompanyProfile/${this.state.userid}`,
+        `http://localhost:9000/EditCompanyProfile/${this.state.userid._id}`,
         newCompanyInfo
       )
 

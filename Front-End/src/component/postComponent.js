@@ -1,27 +1,34 @@
 import React, { Component } from "react";
 import axios from "axios";
+import cookie from "react-cookies";
+
 import { withRouter } from "react-router-dom";
 class postComponent extends Component {
   state = {};
 
   deletePost = id_post => {
-    console.log("user id", this.props.userid);
-    console.log("id_post", this.props.post._id);
+    // console.log("user id", this.props.userid);
+    // console.log("id_post", this.props.post._id);
     axios
       .delete(
-        `http://localhost:9000/delete_Post/${this.props.userid}/${this.props.post._id}`
+        `http://localhost:9000/delete_Post/${this.props.userid._id}/${this.props.post._id}`
       )
       .then(response => {
-        console.log(response);
         this.props.getPost();
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+
+
   aboutCompany =() => {
-    console.log("Post Component",this.props.companyId);
-    console.log("Post Component POSTID",this.props.post._id);
+    console.log("POST COMPONENT")
+    console.log("Company ID",this.props.companyId);
+    console.log('USER ID', cookie.load("isLoggedIn")._id)
+    
+    console.log("Post POSTID",this.props.post._id);
 
     //*********************************Should talk with it post */
     // post 5e0ce9c2fcc9ed42b6b96180
@@ -36,10 +43,54 @@ this.props.history.push({
 })
   };
 
+
+
+sendRequest = ()=>{
+  console.log("this.props.post._id",this.props.post._id)
+  console.log("UserID",cookie.load("isLoggedIn")._id)
+  console.log("COMPANY", this.props.companyId)
+
+
+  // requests:[
+  //   {
+  //     useID: String,
+  //     postID: String,
+  //     Accepted : Boolean
+
+  //   }
+
+  // ]
+    // axios
+  //     .post(
+  //     `http://localhost:9000/traineeRequest/${cookie.load("isLoggedIn")._id}/${this.props.companyId}/${this.props.post._id}`
+  //   )
+
+
+  let newRequest = {
+    userID :cookie.load("isLoggedIn")._id,
+    postID : this.props.post._id,
+    Accepted :false
+  }
+    axios
+    .post(
+    `http://localhost:9000/traineeRequest/${this.props.companyId}`, newRequest
+  )
+  .then(({ data })=>{
+    console.log("data from component post", data)
+  })
+
+}
+
+
+
+
+
+  
+
   renderCopmanyPosts = () => {
     return (
       <div className="container">
-        <h4>post COMPONENT</h4>
+        <h4>post COMPONENT_______________</h4>
 
         <div>
           <h4>
@@ -70,7 +121,7 @@ this.props.history.push({
     
     return (
       <div className="container">
-        <h5>post COMPONENT Trainee</h5>
+        {/* <h5>post COMPONENT Trainee</h5> */}
 
         <div>
           <h4>
@@ -92,6 +143,9 @@ this.props.history.push({
           <div>
             <button className="btn btn-info" onClick={this.aboutCompany}>
               More About Company
+            </button>
+            <button className="btn btn-warning" onClick={this.sendRequest}>
+              Send Request
             </button>
           </div>
         </div>

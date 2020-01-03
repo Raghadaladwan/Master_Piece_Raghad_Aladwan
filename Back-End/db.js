@@ -61,7 +61,18 @@ let companies = new mongoose.Schema({
       to_Date: String,
       comments: [{ body: String }]
     }
+  ],
+  requests:[
+    {
+      userID: String,
+      postID: String,
+      Accepted : Boolean
+
+    }
+
   ]
+  
+  
 });
 
 let owner = new mongoose.Schema({
@@ -83,32 +94,36 @@ let Owner = mongoose.model("owner", owner);
 // _______________________________________________Check User Login
 let checkUserLogin = (callBack, userInfo) => {
   // shoud put if condition for role to serch in collection
-  console.log(userInfo);
+  // console.log(userInfo);
 
   Trainee.findOne(
     {
       email: userInfo.email,
       password: userInfo.password
-    },
+    },{_id:1 , role:1},
     (error, trainee_response) => {
       if (error) {
         console.log(error);
       } else if (trainee_response != null) {
-        callBack(trainee_response._id, trainee_response.role);
-        console.log("CHECKUSER TRAINEE", callBack);
+        callBack(trainee_response);
+        // console.log("CHECKUSER TRAINEE", callBack);
       } else {
         Companies.findOne(
           {
             email: userInfo.email,
             password: userInfo.password
-          },
+          },{_id:1, role:1},
           (error, company_response) => {
             if (error) {
               callBack("User Dosent exists ", null);
             } else if (company_response !== null) {
-              callBack(company_response._id, company_response.role);
+              console.log("company from checkUserLogin",company_response)
+              callBack(company_response);
             } else {
-              console.log("Not a User");
+              // let err = new Error("Not A User")
+              // err.statuscode="404"
+              callBack('Not a User')
+              // console.log("Not a User");
             }
           }
         );
@@ -117,71 +132,71 @@ let checkUserLogin = (callBack, userInfo) => {
   );
 };
 
-let getTrainee = cb => {
-  Trainee.find({}, function(err, docs) {
-    if (err) {
-      console.log("ERR:", err);
-      cb(err);
+let getTrainee = callBack => {
+  Trainee.find({}, function(error, trainee) {
+    if (error) {
+      // console.log("ERR:", error);
+      callBack(err);
     } else {
-      cb(docs);
+      callBack(trainee);
     }
   });
 };
 
-let getCompany = cb => {
-  Companies.find({}, function(err, docs) {
-    if (err) {
-      console.log("ERR:", err);
-      cb(err);
+let getCompany = callBack => {
+  Companies.find({}, function(error, company) {
+    if (error) {
+      // console.log("ERROR:", error);
+      callBack(error);
     } else {
-      console.log("DOs", docs);
-      cb(docs);
+      // console.log("company", company);
+      callBack(company);
     }
   });
 };
 
-let registTrainee = (callBack, box) => {
+let registTrainee = (callBack, newTraineeInfo) => {
   Trainee.insertMany(
     [
       {
-        fullName: box.fullName,
-        email: box.email,
-        password: box.password,
-        gender: box.gender,
-        university: box.university,
-        img_path: box.img_path,
-        field: box.field,
-        role: box.role
+        fullName: newTraineeInfo.fullName,
+        email: newTraineeInfo.email,
+        password: newTraineeInfo.password,
+        gender: newTraineeInfo.gender,
+        university: newTraineeInfo.university,
+        img_path: newTraineeInfo.img_path,
+        field: newTraineeInfo.field,
+        role: newTraineeInfo.role
       }
     ],
-    function(err, New) {
-      if (err) {
-        console.log("ERR:", err);
+    function(error, New) {
+      if (error) {
+        console.log("ERR:", error);
       }
       getTrainee(callBack);
     }
   );
 };
 
-let registCompany = (callBack, box) => {
+let registCompany = (callBack, newCompanyInfo) => {
   Companies.insertMany(
     [
       {
-        name: box.companyName,
-        email: box.email,
-        password: box.password,
-        website: box.website,
-        city: box.city,
-        location: box.location,
-        comp_description: box.comp_description,
-        img_path: box.img_path,
-        field: box.field,
-        role: box.role
+        name: newCompanyInfo.companyName,
+        email: newCompanyInfo.email,
+        password: newCompanyInfo.password,
+        website: newCompanyInfo.website,
+        city: newCompanyInfo.city,
+        location: newCompanyInfo.location,
+        comp_description: newCompanyInfo.comp_description,
+        img_path: newCompanyInfo.img_path,
+        field: newCompanyInfo.field,
+        role: newCompanyInfo.role
       }
     ],
-    function(err, New) {
-      if (err) {
-        console.log("ERR:", err);
+    function(error) {
+      if (error) {
+        console.log("ERR:", error);
       }
       getCompany(callBack);
     }
@@ -190,6 +205,7 @@ let registCompany = (callBack, box) => {
 
 // ______________Get user object after login
 let getUser = (callBack, id) => {
+  console.log(id)
   Trainee.findOne({ _id: id }, (error, trainee_response) => {
     if (error) {
       console.log(error);
@@ -202,7 +218,7 @@ let getUser = (callBack, id) => {
         if (error) {
           console.log(error);
         } else {
-          console.log(company_response);
+          // console.log(company_response);
           callBack(company_response);
         }
       });
@@ -253,29 +269,96 @@ let companyPosts = (callBack, id) => {
 };
 
 let getCompanyInfo = (callBack, id) => {
-  Companies.findOne({ _id: id }, (error, companyInfo) => {
+  Companies.findOne({ _id: id },{name:1,email:1,website:1,img_path:1,city:1,comp_description:1,location:1,_id:0}, (error, companyInfo) => {
     if (error) {
       console.log(error);
     } else {
         callBack(
           // ********************* All things in CallBack WARNING
           companyInfo
-          // companyInfo.name,
-          // companyInfo.email,
-          // companyInfo.website,
-          // companyInfo.img_path,
-          // companyInfo.city,
-          // companyInfo.comp_description,
-          // companyInfo.location
         );
     }
   });
 };
 
 
-let newRequest =(callBack , id_trainee , id_post)=>{
-  console.log("INNER DB")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let newRequest =(callBack ,newRequest,id_company)=>{
+  
+  console.log("IN DATA BASE ID",id_company)
+  console.log("IN DATA BASE REQUEST",newRequest)
+
+  Companies.updateOne(
+    {_id:id_company},
+    {$push:{requests:newRequest}},
+    (error, response) => {
+      if (error) {
+        console.log("Error");
+      } else {
+        callBack(response);
+        console.log("IN DATA BASE")
+      }
+    }
+  )
+  // console.log("_id_tainner", id_trainee)
+  // console.log("INNER DB")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //*********************** SORT */
 let allPosts = (callBack, id) => {
@@ -303,7 +386,6 @@ let allPosts = (callBack, id) => {
 };
 
 let EditTraineeProfile = (callBack, newInfo, trainee_id) => {
-  console.log("newInfo Database", newInfo);
   Trainee.updateMany(
     { _id: trainee_id },
     {
@@ -321,7 +403,6 @@ let EditTraineeProfile = (callBack, newInfo, trainee_id) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("response from DB", response);
         callBack(newInfo);
       }
     }
@@ -329,12 +410,11 @@ let EditTraineeProfile = (callBack, newInfo, trainee_id) => {
 };
 
 let EditCompanyProfile = (callBack, newInfo, company_id) => {
-  console.log("newInfo", newInfo);
   Companies.updateMany(
     { _id: company_id },
     {
       $set: {
-        companyName: newInfo.companyName,
+        name: newInfo.name,
         email: newInfo.email,
         password: newInfo.password,
         website: newInfo.website,
@@ -348,7 +428,6 @@ let EditCompanyProfile = (callBack, newInfo, company_id) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("response from DB", response);
         callBack(newInfo);
       }
     }

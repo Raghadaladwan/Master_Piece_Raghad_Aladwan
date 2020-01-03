@@ -14,9 +14,11 @@ class postsPage extends Component {
   // if compant i need all info and i need form to add new post and i will get back company post just
   // if trainee also i need  all companies posts
   componentDidMount() {
+    // console.log(cookie.load("isLoggedIn"))
     // console.log("this.props.userID", this.state.userid);
     axios
-      .get(`http://localhost:9000/getUser/${cookie.load("isLoggedIn")}`)
+      .get(`http://localhost:9000/getUser/${cookie.load("isLoggedIn")._id}`)
+
       .then(response => {
         if (response.data.role === "company") {
           this.setState({ comp_info: response.data }, () => {});
@@ -34,8 +36,6 @@ class postsPage extends Component {
       .catch(() => {
         console.log("ERROR");
       });
-
-    // another axios to git posts
   }
   //____________________________________________WOrking here
 
@@ -44,16 +44,17 @@ class postsPage extends Component {
     // **************************i want to send the field with http
     // i Want to send the field too
     axios
-      .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")}`)
+      .get(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")._id}`)
       .then(response => {
-        console.log("resp", response.data);
         this.setState({ post: response.data });
       });
   };
 
   getPost = () => {
     axios
-      .get(`http://localhost:9000/copmany_posts/${cookie.load("isLoggedIn")}`)
+      .get(
+        `http://localhost:9000/copmany_posts/${cookie.load("isLoggedIn")._id}`
+      )
       .then(response => {
         this.setState({ post: response.data });
       });
@@ -69,24 +70,23 @@ class postsPage extends Component {
       img_path: this.state.comp_info.img_path
     };
 
-    if (newPost.field === "") {
-      this.setState({ message: "You should add Field" });
-    } else if (newPost.job_description === "") {
-      this.setState({ text: "you shoud add Description" });
+    if (newPost.job_description === "") {
+      console.log("jop description");
+      this.setState({ message: "you shoud add Description" });
     } else if (newPost.from_Date === "" || newPost.to_Date === "") {
-      this.setState({ text: "you shoud add Date" });
+      this.setState({ message: "you shoud add Date" });
     } else {
       axios
         .put(
-          `http://localhost:9000/add_post/${cookie.load("isLoggedIn")}`,
+          `http://localhost:9000/add_post/${cookie.load("isLoggedIn")._id}`,
           newPost
         )
         .then(({ data }) => {
-          console.log(data);
-          this.setState({ post: data });
+          this.getPost();
+          // console.log("data", data);
         });
     }
-    this.getPost();
+//************************ Clean the Form After adding data */
   };
 
   // ********************************* After adding the post it doesn't Appear directly *****
@@ -137,25 +137,23 @@ class postsPage extends Component {
                 </div>
                 <br />
                 <label htmlFor="from_Date">from Date</label>
-                <input
-                  type="date"
-                  id="start_Date"
-                  name="from_Date"
-                  min="2019-01-01"
-                  max="2020-12-31"
+                <input 
+                type="date" 
+                id="start_Date" 
+                name="from_Date"
                 ></input>
                 <label htmlFor="to_Date">to Date</label>
-                <input
-                  type="date"
-                  id="to_Date"
-                  name="to_Date"
-                  min="2019-01-01"
-                  max="2020-12-31"
+                <input 
+                type="date" 
+                id="to_Date" 
+                name="to_Date"
                 ></input>
                 <br />
                 <button type="submit" className="btn btn-primary">
                   Add Post
                 </button>
+                <br />
+                {this.state.message}
               </form>
             </div>
           </div>
@@ -182,10 +180,13 @@ class postsPage extends Component {
             return (
               <div key={companyId._id}>
                 {companyId.post.map(innerPost => {
-                  return <PostComponent key={innerPost._id} 
-                  post={innerPost}
-                  companyId={companyId._id}
-                   />;
+                  return (
+                    <PostComponent
+                      key={innerPost._id}
+                      post={innerPost}
+                      companyId={companyId._id}
+                    />
+                  );
                 })}
               </div>
             );

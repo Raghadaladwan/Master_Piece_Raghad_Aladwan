@@ -20,15 +20,40 @@ class postPage extends Component {
 
 
 
-  sendRequest = () => {
-    console.log("send request to company");
-    axios
-    .post(
-      `http://localhost:9000/traineeRequest/${cookie.load("isLoggedIn")}/${this.props.location.state.postId}`
-    )
 
 
-  };
+  
+  // sendRequest = () => {
+  //   console.log("send request to company");
+  //   // "5e0a1c8fc70840444638efa2"
+  //   console.log("this.props.location.state.postId",this.props.location.state.postId)
+  //   axios
+  //   .post(
+  //     `http://localhost:9000/traineeRequest/${cookie.load("isLoggedIn")._id}/${this.props.location.state.postId}/${this.props.location.state._id}`
+  //   )
+
+
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   goBack = () => {
@@ -60,7 +85,7 @@ class postPage extends Component {
         <h2>Field :{this.state.allCompanyInfo.field} </h2>
 
         <button onClick={this.goBack}>Go Back</button>
-        <button onClick={this.sendRequest}>send Request </button>
+        {/* <button onClick={this.sendRequest}>send Request </button> */}
       </div>
     ) : (
       <div> null </div>
