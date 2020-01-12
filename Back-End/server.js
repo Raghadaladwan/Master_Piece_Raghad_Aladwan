@@ -26,8 +26,7 @@ app.get("/", (req, res) => {
 app.post("/loginUser", (request, res) => {
   let email_Password = request.body;
   // console.log(email_Password);
-  DB.checkUserLogin((user) => {
-    
+  DB.checkUserLogin(user => {
     res.json(user);
   }, email_Password);
 });
@@ -49,7 +48,7 @@ app.post("/companyregister", (req, res) => {
 
 // __________________________________________Get Trainee
 app.get("/getUser/:id", (req, res) => {
-  console.log("req",req.params.id)
+  // console.log("req",req.params.id)
   DB.getUser(result => {
     res.json(result);
   }, req.params.id);
@@ -99,24 +98,23 @@ app.get("/copmany_posts/:id", (req, res) => {
   }, req.params.id);
 });
 
-
-app.put('/all_posts/:id',(req,res)=>{
-  console.log("ALL POST ",req.body)
+app.put("/all_posts/:id", (req, res) => {
+  // console.log("ALL POST ",req.body)
   // console.log(field)
-  DB.allPosts(result=>{
-    res.json(result)
-  }, 
-  req.body,
-  req.params.id)
-})
+  DB.allPosts(
+    result => {
+      res.json(result);
+    },
+    req.body,
+    req.params.id
+  );
+});
 
-app.post('/getCompanyInfo/:id',(req,res)=>{
-  DB.getCompanyInfo(result=>{
-    res.json(result)
-  }, req.params.id)
-
-})
-
+app.post("/getCompanyInfo/:id", (req, res) => {
+  DB.getCompanyInfo(result => {
+    res.json(result);
+  }, req.params.id);
+});
 
 app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
   // console.log("CALL BACK FROM SERVER  DELETE");
@@ -131,6 +129,19 @@ app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
   );
 });
 
+app.post(
+  "/checkTraineeRequest/:id_trainee/:id_post/:id_company",
+  (req, res) => {
+    DB.checkTraineeRequest(
+      response => {
+        res.json(response);
+      },
+      req.params.id_trainee,
+      req.params.id_post,
+      req.params.id_company
+    );
+  }
+);
 
 
 
@@ -141,23 +152,25 @@ app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
 
 
 
+app.get("/getAllTraineeRequests/:id_user", (req, res) => {
+  console.log("request.params>>>>>>>>>>>>>", req.params.id_user);
+
+  DB.getAllTraineeRequests(r => {
+    res.json(r);
+  }, req.params.id_user);
+});
 
 
 
 
+app.get('/getAcceptedOrNot/:id_user',(req,res)=>{
 
+  console.log("request.params>>>>>>>>>>>>>", req.params.id_user);
 
-app.post("/traineeRequest/:id_company", (req,res)=>{
-  // console.log(req.params.id_company)
-  // console.log('req.body', req.body)
-  DB.newRequest(result=>{
-
+  DB.getAcceptedOrNot(result =>{
     res.json(result)
-  }, 
-  req.body,
-  req.params.id_company 
+  }, req.params.id_user)
   
-  )
 })
 
 
@@ -182,6 +195,28 @@ app.post("/traineeRequest/:id_company", (req,res)=>{
 
 
 
+
+
+
+
+
+
+
+
+
+
+app.post("/traineeRequest/:id_company", (req, res) => {
+  // console.log('req.body', req.body)
+  // console.log('req.params', req.params.id_company)
+  DB.newTraineeRequest(
+    result => {
+      res.json(result);
+      console.log(result);
+    },
+    req.body,
+    req.params.id_company
+  );
+});
 
 const PORT = 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));

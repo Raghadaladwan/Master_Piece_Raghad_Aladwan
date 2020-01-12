@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import axios from "axios";
 import cookie from "react-cookies";
-
 import { withRouter } from "react-router-dom";
 class postComponent extends Component {
   state = {
+    btn: ""
+  };
 
+  componentDidMount = () => {
+    if(this.props.Trainee_Info != null)
+    this.getRequest();
   };
 
   deletePost = id_post => {
-    // console.log("user id", this.props.userid);
-    // console.log("id_post", this.props.post._id);
     axios
       .delete(
         `http://localhost:9000/delete_Post/${this.props.userid._id}/${this.props.post._id}`
@@ -23,59 +25,60 @@ class postComponent extends Component {
       });
   };
 
-
-
-  aboutCompany =() => {
-    console.log("POST COMPONENT")
-    console.log("Company ID",this.props.companyId);
-    console.log('USER ID', cookie.load("isLoggedIn")._id)
-    
-    console.log("Post POSTID",this.props.post._id);
-
-    //*********************************Should talk with it post */
-    // post 5e0ce9c2fcc9ed42b6b96180
-    // console.log("About Company Shold go to POST PAGE ")
-
-this.props.history.push({
-  pathname : "/CompanyInfo",
-  state:{
-    _id:this.props.companyId,
-    postId:this.props.post._id
-  }
-})
+  getRequest = () => {
+    axios
+      .post(
+        `http://localhost:9000/checkTraineeRequest/${
+          cookie.load("isLoggedIn")._id
+        }/${this.props.post._id}/${this.props.companyPost}`
+      )
+      .then(response => {
+        if (  response.data != null)
+          this.setState({ btn: response.data.traineeRequests[0].btn });
+        console.log("bittar", response.data);
+      });
   };
 
+  aboutCompany = () => {
 
+    this.props.history.push({
+      pathname: "/CompanyInfo",
+      state: {
+        _id: this.props.companyPost,
+        postId: this.props.post._id
+      }
+    });
+  };
 
-sendRequest = ()=>{
-  // console.log("this.props.post._id",this.props.post._id)
-  // console.log("UserID",cookie.load("isLoggedIn")._id)
-  // console.log("COMPANY", this.props.companyId)
+  sendRequest = () => {
+ 
+    console.log(
+      "this.props.Trainee_Info.fullName",
+      this.props.Trainee_Info.fullName
+    );
 
-
-  let newRequest = {
-    userID :cookie.load("isLoggedIn")._id,
-    postID : this.props.post._id,
-    Accepted :false
-  }
+    let newRequest = {
+      userID: cookie.load("isLoggedIn")._id,
+      postID: this.props.post._id,
+      Accepted: false,
+      img_path: this.props.Trainee_Info.img_path,
+      fullName: this.props.Trainee_Info.fullName,
+      field: this.props.Trainee_Info.field,
+      university: this.props.Trainee_Info.university,
+      btn: "disabled"
+    };
+    console.log(newRequest);
     axios
-    .post(
-    `http://localhost:9000/traineeRequest/${this.props.companyId}`, newRequest
-  )
-  .then(({ data })=>{
-    console.log("data from component post", data)
-  })
+      .post(
+        `http://localhost:9000/traineeRequest/${this.props.companyPost}`,
+        newRequest
+      )
+      .then(({ data }) => {
+        console.log("data from component post", data);
+      });
 
-  this.refs.btn.setAttribute("disabled", "disabled");
-
-  // this.refs.btn.removeAttribute("disabled");
-
-
-  // disabled="disabled"
-
-}
-
-  
+    window.location.reload();
+  };
 
   renderCopmanyPosts = () => {
     return (
@@ -93,7 +96,6 @@ sendRequest = ()=>{
           </h4>
           <h4>post field {this.props.post.field}</h4>
 
-        
           <h4>post Job Descripthion {this.props.post.job_description}</h4>
           <h4>
             from Date {this.props.post.from_Date} to Date
@@ -108,10 +110,12 @@ sendRequest = ()=>{
   };
 
   renderTraineePosts = () => {
-    
+    let req = this.props.request.filter(id => {
+      return id !== this.props.post._id;
+    });
+
     return (
       <div className="container">
-        {/* <h5>post COMPONENT Trainee</h5> */}
 
         <div>
           <h4>
@@ -134,7 +138,11 @@ sendRequest = ()=>{
             <button className="btn btn-info" onClick={this.aboutCompany}>
               More About Company
             </button>
-            <button ref="btn" className="btn btn-warning" onClick={this.sendRequest} >
+            <button
+              className="btn btn-warning"
+              onClick={this.sendRequest}
+              disabled={this.state.btn}
+            >
               Send Request
             </button>
           </div>
@@ -151,4 +159,3 @@ sendRequest = ()=>{
 }
 
 export default withRouter(postComponent);
-// export default  postComponent;

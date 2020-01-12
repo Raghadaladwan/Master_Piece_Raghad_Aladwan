@@ -60,29 +60,28 @@ let companies = new mongoose.Schema({
       from_Date: String,
       to_Date: String,
       comments: [{ body: String }]
+      //**************************************** */ btn:String
     }
   ],
-  requests:[
+  traineeRequests: [
     {
       userID: String,
       postID: String,
-      Accepted : Boolean
-
+      Accepted: Boolean,
+      field: String,
+      img_path: String,
+      fullName: String,
+      university: String,
+      btn: String
     }
-
   ]
-  
-  
 });
 
 let owner = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  role: String,
-
-  LandingPageTopContant: String,
-  LandingPageSecondContant: String
+  role: String
 });
 
 //____________________________________________________END ALL SCHEMA
@@ -100,7 +99,8 @@ let checkUserLogin = (callBack, userInfo) => {
     {
       email: userInfo.email,
       password: userInfo.password
-    },{_id:1 , role:1},
+    },
+    { _id: 1, role: 1 },
     (error, trainee_response) => {
       if (error) {
         console.log(error);
@@ -111,16 +111,15 @@ let checkUserLogin = (callBack, userInfo) => {
           {
             email: userInfo.email,
             password: userInfo.password
-          },{_id:1, role:1},
+          },
+          { _id: 1, role: 1 },
           (error, company_response) => {
             if (error) {
               callBack("User Dosent exists ", null);
             } else if (company_response !== null) {
-              console.log("company from checkUserLogin",company_response)
               callBack(company_response);
             } else {
-           
-              callBack('Not a User')
+              callBack("Not a User");
             }
           }
         );
@@ -202,25 +201,30 @@ let registCompany = (callBack, newCompanyInfo) => {
 
 // ______________Get user object after login
 let getUser = (callBack, id) => {
-  console.log(id)
-  Trainee.findOne({ _id: id }, (error, trainee_response) => {
-    if (error) {
-      console.log(error);
-    } else if (trainee_response != null) {
-      callBack(trainee_response);
+  // console.log(id)
+  Trainee.findOne(
+    { _id: id },
+    { fullName: 1, img_path: 1, field: 1, university: 1, role: 1 },
+    (error, trainee_response) => {
+      if (error) {
+        console.log(error);
+      } else if (trainee_response != null) {
+        // console.log(trainee_response)
+        callBack(trainee_response);
 
-      // shold CallBack trainee id , role , field JUST
-    } else {
-      Companies.findOne({ _id: id }, (error, company_response) => {
-        if (error) {
-          console.log(error);
-        } else {
-          // console.log(company_response);
-          callBack(company_response);
-        }
-      });
+        // shold CallBack trainee id , role , field JUST
+      } else {
+        Companies.findOne({ _id: id }, (error, company_response) => {
+          if (error) {
+            console.log(error);
+          } else {
+            // console.log(company_response);
+            callBack(company_response);
+          }
+        });
+      }
     }
-  });
+  );
 };
 
 let profileInfo = (callBack, id) => {
@@ -266,63 +270,98 @@ let companyPosts = (callBack, id) => {
 };
 
 let getCompanyInfo = (callBack, id) => {
-  Companies.findOne({ _id: id },{name:1,email:1,website:1,img_path:1,city:1,comp_description:1,location:1,_id:0}, (error, companyInfo) => {
-    if (error) {
-      console.log(error);
-    } else {
+  Companies.findOne(
+    { _id: id },
+    {
+      name: 1,
+      email: 1,
+      website: 1,
+      img_path: 1,
+      city: 1,
+      comp_description: 1,
+      location: 1,
+      _id: 0
+    },
+    (error, companyInfo) => {
+      if (error) {
+        console.log(error);
+      } else {
         callBack(
           // ********************* All things in CallBack WARNING
           companyInfo
         );
+      }
     }
-  });
+  );
+};
+
+//-----------------------------------------------
+let newTraineeRequest = (callBack, newRequest, id_company) => {
+  // console.log("IN DATA BASE ID",id_company)
+  // console.log("IN DATA BASE REQUEST",newRequest)
+  // console.log("IN DATA BASE BTN",btn)
+
+  Companies.updateOne(
+    { _id: id_company },
+    { $push: { traineeRequests: newRequest } },
+
+    // ******************************Inner Post ubdate the post btn inner the same post Line 63
+    (error, response) => {
+      if (error) {
+        console.log("Error");
+      } else {
+        console.log("trainee request data base");
+        callBack(response);
+        // console.log("Call back from new request",response);
+        // console.log("IN DATA BASE")
+      }
+    }
+  );
+};
+
+let checkTraineeRequest = (callBack, id_trainee, id_post, id_company) => {
+  Companies.findOne(
+    {
+      _id: id_company,
+      "traineeRequests.userID": id_trainee,
+      "traineeRequests.postID": id_post
+    },
+    { _id: 0, "traineeRequests.btn": 1 },
+    (error, resposne) => {
+      callBack(resposne);
+    }
+  );
 };
 
 
 
 
 
+let getAllTraineeRequests = (callBack, id_user) => {
+  console.log("user",id_user)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let newRequest =(callBack ,newRequest,id_company)=>{
-  
-  // console.log("IN DATA BASE ID",id_company)
-  // console.log("IN DATA BASE REQUEST",newRequest)
-
-
-  Companies.updateOne(
-    {_id:id_company},
-    {$push:{requests:newRequest}},
-    (error, response) => {
-      if (error) {
-        console.log("Error");
-      } else {
-        callBack(response);
-        console.log("Call back from new request",response);
-        console.log("IN DATA BASE")
-      }
+ Companies.findOne(
+   {_id:id_user},
+  {_id:0, traineeRequests:1},
+  (error,allRequest)=>{
+    if(error){
+      console.log(error)
     }
+    console.log("allRequest DATABASE ",allRequest.traineeRequests)
+    callBack(allRequest.traineeRequests)
+  }
   )
+
+  
+};
+
+
+
+
+
+let getAcceptedOrNot = (callBack , id_user)=>{
+
+  Companies.find({})
 
 }
 
@@ -345,32 +384,20 @@ let newRequest =(callBack ,newRequest,id_company)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //*********************** SORT  Field */
-let allPosts = (callBack, field , id) => {
-  console.log("DATABASE",field)
+let allPosts = (callBack, field, id) => {
+  // console.log("DATABASE",field)
   Companies.aggregate(
     [
       { $match: {} },
       { $unwind: "$post" },
-      { $match: {"post.field":field.field} },
-      
+      { $match: { "post.field": field.field } },
+
       {
         $group: {
           _id: "$_id",
-          post: { $push: "$post" }
+          post: { $push: "$post" },
+          traineeRequests: { $push: "$traineeRequests" }
         }
       }
 
@@ -380,6 +407,7 @@ let allPosts = (callBack, field , id) => {
       if (error) {
         console.log("ERROR");
       } else {
+        // console.log("ALL POSTS", allPosts)
         callBack(allPosts);
       }
     }
@@ -465,5 +493,8 @@ module.exports = {
   EditCompanyProfile,
   allPosts,
   getCompanyInfo,
-  newRequest
+  newTraineeRequest,
+  getAllTraineeRequests,
+  checkTraineeRequest,
+  getAcceptedOrNot
 };

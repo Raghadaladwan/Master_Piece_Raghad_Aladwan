@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import cookie from "react-cookies";
 
 
 class CompanyInfo extends Component {
@@ -15,6 +14,7 @@ class CompanyInfo extends Component {
         this.setState({
           allCompanyInfo: response.data
         })
+        
       );
   };
 

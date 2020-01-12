@@ -1,53 +1,99 @@
 import React, { Component } from "react";
-import axios from "axios";
+// import axios from "axios";
+import axios from 'axios';
 import cookie from "react-cookies";
+import AllRequestsComponent from '../component/allRequestsComponent'
+import AcceptedOrRejected from '../component/acceptedOrRejected'
 
-// import PostsPage from "./postsPage";
 
 class adminDashBoardPage extends Component {
   state = {
-    companyRequests: [],
-    tranineeRequest: []
+    tranineeRequest:null,
+    companyRequests:null,
+    
+   
   };
 
   componentDidMount=()=>{
 
-    cookie.load("isLoggedIn").field === "Admin"?
-    (
     axios
-    .get(`http://localhost:9000/getAllCompanies/${cookie.load("isLoggedIn")._id}`)
-    .then( response =>{
-      this.setState({
-        companies : response
-      })
+    .get(`http://localhost:9000/getUser/${cookie.load("isLoggedIn")._id}`)
 
-    }) .catch(
-      console.log("IN ADMIN")
-    )
+    .then(response => {
+      if (response.data.role === "company") {
+       
+        this.getAllTraineeRequests()
+      }
+      if (response.data.role === "trainee") {
+        this.setState({
+          tranineeRequest: response.data
+        });
 
-
-    ):(axios
-    .get(`http:://localhost:9000/getTraineeRequest/${cookie.load("isLoggedIn")._id}`)
-    .then(response =>{
-      cookie.load("isLoggedIn").field ==="company"? 
-      this.setState({
-        company : response
-      })
-      : this.setState({ tranineeRequest: response})
+       
+      }
     })
-    )
-
-
+    .catch(() => {
+      console.log("ERROR");
+    });
+    
   }
 
-  render() {
-    return (
-      <div>
+
+  getAllTraineeRequests=()=>{
+    axios
+       .get(`http://localhost:9000/getAllTraineeRequests/${cookie.load("isLoggedIn")._id}`)
+    .then(response =>{
+      console.log('response>>>>>>>>>>', response.data)
+      cookie.load("isLoggedIn").role ==="company"? 
+      this.setState({
+        companyRequests : response.data
+      })
+      : this.setState({ 
+        tranineeRequest: response.data
+      })
+    })
+    
+  }
+
+  
+
+
+
+
+
+
+  CompanyRequests=()=>{
+
+   return(
+     <div>
+        {this.state.companyRequests.map(requests=>{
+          return(
+            <AllRequestsComponent 
+            key={requests._id}
+            companyRequests={requests} />
+          );
+
+        })}
+        </div>
+   );
       
-        <p>{JSON.stringify(this.props.user)}</p>
-        adminDashBoardPage
-      </div>
-    );
+     
+    
+  }
+  TranineeRequest =()=>{
+    return(
+    <div>Trainee
+      {/* <h1>{this.state.tranineeRequest.Accepted}</h1> */}
+    </div>
+
+      );
+
+  }
+  render() {
+
+    return this.state.companyRequests ?
+    this.CompanyRequests()
+    :this.TranineeRequest()
   }
 }
 

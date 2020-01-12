@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
 import PostComponent from "../component/postComponent";
+import { request } from "https";
 
 class postsPage extends Component {
   state = {
     comp_info: null,
+    Trainee_Info: null,
     userid: cookie.load("isLoggedIn"),
     message: "",
     post: []
@@ -14,8 +16,6 @@ class postsPage extends Component {
   // if compant i need all info and i need form to add new post and i will get back company post just
   // if trainee also i need  all companies posts
   componentDidMount() {
-    // console.log(cookie.load("isLoggedIn"))
-    // console.log("this.props.userID", this.state.userid);
     axios
       .get(`http://localhost:9000/getUser/${cookie.load("isLoggedIn")._id}`)
 
@@ -40,13 +40,16 @@ class postsPage extends Component {
   //____________________________________________WOrking here
 
   getAllPosts = () => {
-    console.log("Trainee field", this.state.Trainee_Info.field)
+    console.log("Trainee field", this.state.Trainee_Info.field);
 
-    const field=this.state.Trainee_Info.field
+    const field = this.state.Trainee_Info.field;
 
     axios
-      .put(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")._id}`,{field})
+      .put(`http://localhost:9000/all_posts/${cookie.load("isLoggedIn")._id}`, {
+        field
+      })
       .then(response => {
+        console.log("response.data", response.data);
         this.setState({ post: response.data });
       });
   };
@@ -87,9 +90,8 @@ class postsPage extends Component {
           // console.log("data", data);
         });
     }
-//************************ Clean the Form After adding data */
+    //************************ Clean the Form After adding data */
   };
-
 
   render() {
     const { addPost, deletePost } = this;
@@ -137,17 +139,9 @@ class postsPage extends Component {
                 </div>
                 <br />
                 <label htmlFor="from_Date">from Date</label>
-                <input 
-                type="date" 
-                id="start_Date" 
-                name="from_Date"
-                ></input>
+                <input type="date" id="start_Date" name="from_Date"></input>
                 <label htmlFor="to_Date">to Date</label>
-                <input 
-                type="date" 
-                id="to_Date" 
-                name="to_Date"
-                ></input>
+                <input type="date" id="to_Date" name="to_Date"></input>
                 <br />
                 <button type="submit" className="btn btn-primary">
                   Add Post
@@ -175,16 +169,18 @@ class postsPage extends Component {
     } else {
       return (
         <div>
-          <h3 style={{ color: "red" }}>fetch all post for Trainee</h3>
-          {this.state.post.map(companyId => {
+          {this.state.post.map(companyPost => {
+            console.log(companyPost.traineeRequests.postID);
             return (
-              <div key={companyId._id}>
-                {companyId.post.map(innerPost => {
+              <div key={companyPost._id}>
+                {companyPost.post.map(innerPost => {
                   return (
                     <PostComponent
                       key={innerPost._id}
                       post={innerPost}
-                      companyId={companyId._id}
+                      request={companyPost.traineeRequests}
+                      companyPost={companyPost._id}
+                      Trainee_Info={this.state.Trainee_Info}
                     />
                   );
                 })}
