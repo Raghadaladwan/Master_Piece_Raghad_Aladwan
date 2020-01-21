@@ -73,59 +73,80 @@ class postComponent extends Component {
 
   renderCopmanyPosts = () => {
     return (
-      <div className="container">
-        <div className="col-6" style={{ maxWidth: "18rem" }}>
-          <div>
-            <h4 className="">{this.props.post.field}</h4>
+  
+        
+        <div className=" container col-6  " style={{ maxWidth: "18rem" }} >
+              
+          <br></br>
+      
+          <div className='bg-light'>
+            <h4 className="card-header">{this.props.post.field}</h4>
 
             <div className='class="card-text'>
-              <h2 className="card-body">
+              <h4 className="card-body">
                
-                Job Descripthion : {this.props.post.job_description}
-              </h2>
-              
+                Description :<br></br> {this.props.post.job_description}
+              </h4>
+              <hr></hr>
               <span>
-                From : {this.props.post.from_Date}
-                <br /> To:
+                From : &nbsp;{this.props.post.from_Date}
+                <br /> To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
                 {this.props.post.to_Date}
               </span>
             </div>
-            <div>
+            <br></br>
+            <div className="row justify-content-center">
               <button
-                className="btn btn-danger"
+                className="btn btn-danger "
                 onClick={this.deletePost.bind(this)}
               >
                 delete
               </button>
+             
             </div>
+            <hr></hr>
           </div>
+     
         </div>
-      </div>
+    
     );
   };
 
   renderTraineePosts = () => {
     return (
+
+    // img size px // button at buttom // dashboard card width 100%
       <div className="container ">
-        <div className="row mr-10 ">
-          <div className="col-6  ">
+       <br></br>
+       <br></br>
+       <br></br>
+       <br></br>
+        <div className="row  " >
+          <div className="col-4  ">
             <img
               src={this.props.post.img_path}
-              style={{ width: "210px", height: "230px" }}
+              style={{ width: "100%", height: "100%" }}
               alt=""
             ></img>
           </div>
 
-          <div className="col-6 ">
+          <div  className="col-8 ">
             <h4 className="card-header h2">{this.props.post.field}</h4>
 
-            <h4>Job Descripthion : {this.props.post.job_description}</h4>
-            <h4>
+            <h4>Job Description : 
+              
+              <br></br>
+            {this.props.post.job_description}</h4>
+           
+            <small class= " col-md-10 offset-md-1 text-muted">
+            <div>
               From Date :{this.props.post.from_Date}
-              <br />
+           <br></br>
               To Date:{this.props.post.to_Date}
-            </h4>
-            <div className="row">
+              </div>
+            
+            </small>
+            <div>
               <button
                 className="btn btn-info col-6"
                 onClick={this.aboutCompany}
@@ -140,7 +161,7 @@ class postComponent extends Component {
               >
                 Send Request
               </button>
-            </div>
+              </div>
           </div>
         </div>
         <br />

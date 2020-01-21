@@ -320,28 +320,32 @@ class userProfilePage extends Component {
     );
   };
   renderDefaultCompanyView = () => {
+    // const url='../../public/back2.jpg'
     return (
-      
-      
-      
-
       <div
         className="container"
-        style={{ position: "relative", minHeight: "100vh" }}
+        style={{ position: "relative", minHeight: "100vh"   }}
       >
+        <br />
+        <br />
 
-
-        <br/>
-        <br/>
-      
         <div className="row pt-10">
-          <div className='col-5'>
+          <div className="col-5">
             <div onDoubleClick={this.edit_info}>
               <img
                 alt=""
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: "100%", height: "100%" }}
                 src={this.state.companyInfo.img_path}
               ></img>
+              <br></br>
+              <br></br>
+              <span className="list-group-item" style={{ color: "#EC7063" }}>
+                <b>About Us</b> :
+              </span>
+              <span className="list-group-item">
+                {" "}
+                {this.state.companyInfo.comp_description}
+              </span>
             </div>
           </div>
 
@@ -351,56 +355,68 @@ class userProfilePage extends Component {
               style={{ marginTop: "40%" }}
               onDoubleClick={this.edit_info}
             >
+              {" "}
+              comp name
               {this.state.companyInfo.name}
+            </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div className="  row " style={{ width: "50rem" }}>
+              <div
+                className=" col-md-10  list-group-item"
+                onDoubleClick={this.edit_info}
+              >
+                <span style={{ color: "#EC7063" }}>
+                  <b>Website :&nbsp;&nbsp; &nbsp;</b>{" "}
+                </span>
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={this.state.companyInfo.website}
+                >
+                  {this.state.companyInfo.website}
+                </a>
+              </div>
+
+              <div
+                className="col-md-10  list-group-item"
+                onDoubleClick={this.edit_info}
+              >
+                <span style={{ color: "#EC7063" }}>
+                  {" "}
+                  <b>We Are In: &nbsp; </b>
+                </span>
+                {this.state.companyInfo.city}
+              </div>
+
+              <div
+                className="col-md-10 list-group-item"
+                onDoubleClick={this.edit_info}
+              >
+                <span style={{ color: "#EC7063" }}>
+                  <b>Location</b> :&nbsp; &nbsp;{" "}
+                </span>
+                {this.state.companyInfo.location}
+              </div>
+
+              <div
+                className="col-md-10 list-group-item"
+                onDoubleClick={this.edit_info}
+              ></div>
             </div>
           </div>
         </div>
-        
+
         <br></br>
 
-
-        <div className="  row " style={{ width: "50rem" }}>
-
-        
-            <div className=" col-md-10 offset-md-1  list-group-item" onDoubleClick={this.edit_info}>
-              <span style={{ color:'#EC7063'}}><b >Website :&nbsp;&nbsp; &nbsp;</b> </span>
-              <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href={this.state.companyInfo.website}
-              >
-                {this.state.companyInfo.website}
-              </a>
-            </div>
-
-            <div
-              className="col-md-10 offset-md-1 list-group-item"
-              onDoubleClick={this.edit_info}
-            >
-              <span style={{ color:'#EC7063'}}> <b>We Are In: &nbsp;   </b>
-               </span>
-                {this.state.companyInfo.city}
-            </div>
-
-            <div className="col-md-10 offset-md-1 list-group-item" onDoubleClick={this.edit_info}>
-              <span style={{ color:'#EC7063'}}><b>Location</b> :&nbsp; &nbsp;  </span>
-              {this.state.companyInfo.location}
-            </div>
-
-            <div
-              className="col-md-10 offset-md-1 list-group-item"
-              onDoubleClick={this.edit_info}
-            >
-              <span style={{ color:'#EC7063'}}> <b>About Us</b> : &nbsp;&nbsp;</span>
-              {this.state.companyInfo.comp_description}
-            </div>
-          </div>
-          <div class="card-body">
-            <small class= " col-md-10 offset-md-1 text-muted">Last updated 3 mins ago</small>
-          </div>
-          </div>
-        
-     
+        <div class="card-body">
+          <small class=" col-md-10 offset-md-1 text-muted">
+            Last updated 3 mins ago
+          </small>
+        </div>
+      </div>
     );
   };
 
