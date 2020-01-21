@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
 
 app.post("/loginUser", (request, res) => {
   let email_Password = request.body;
-  // console.log(email_Password);
   DB.checkUserLogin(user => {
     res.json(user);
   }, email_Password);
@@ -48,7 +47,6 @@ app.post("/companyregister", (req, res) => {
 
 // __________________________________________Get Trainee
 app.get("/getUser/:id", (req, res) => {
-  // console.log("req",req.params.id)
   DB.getUser(result => {
     res.json(result);
   }, req.params.id);
@@ -99,8 +97,6 @@ app.get("/copmany_posts/:id", (req, res) => {
 });
 
 app.put("/all_posts/:id", (req, res) => {
-  // console.log("ALL POST ",req.body)
-  // console.log(field)
   DB.allPosts(
     result => {
       res.json(result);
@@ -117,9 +113,7 @@ app.post("/getCompanyInfo/:id", (req, res) => {
 });
 
 app.delete("/delete_Post/:id_company/:id_post", (req, res) => {
-  // console.log("CALL BACK FROM SERVER  DELETE");
-  // console.log("req.params.id_company", req.params.id_company);
-  // console.log("req.params.id_post", req.params.id_post);
+
   DB.deletePost(
     result => {
       res.json(result);
@@ -143,75 +137,33 @@ app.post(
   }
 );
 
-
-
-
-
-
-
-
-
-
 app.get("/getAllTraineeRequests/:id_user", (req, res) => {
-  console.log("request.params>>>>>>>>>>>>>", req.params.id_user);
-
-  DB.getAllTraineeRequests(r => {
-    res.json(r);
+  DB.getAllTraineeRequests(result => {
+    res.json(result);
   }, req.params.id_user);
 });
 
+app.get("/getAccebtedOrRejected/:id_user", (req, res) => {
+  DB.getAccebtedOrRejected(result => {
+    res.json(result);
+  }, req.params.id_user);
+});
 
-
-
-app.get('/getAcceptedOrNot/:id_user',(req,res)=>{
-
-  console.log("request.params>>>>>>>>>>>>>", req.params.id_user);
-
-  DB.getAcceptedOrNot(result =>{
-    res.json(result)
-  }, req.params.id_user)
-  
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.post("/rejectOrAccept/:id_company/:id_post", (req, res) => {
+  DB.rejectOrAccept(
+    result => {
+      res.json(result);
+    },
+    req.params.id_company,
+    req.params.id_post,
+    req.body
+  );
+});
 
 app.post("/traineeRequest/:id_company", (req, res) => {
-  // console.log('req.body', req.body)
-  // console.log('req.params', req.params.id_company)
   DB.newTraineeRequest(
     result => {
       res.json(result);
-      console.log(result);
     },
     req.body,
     req.params.id_company

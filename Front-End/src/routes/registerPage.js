@@ -118,7 +118,6 @@ class registerPage extends Component {
     await axios
       .post("http://localhost:9000/companyregister", { newCompany })
       .then(response => {
-        console.log("Registered");
         this.props.history.push("/loginpage");
       })
       .catch(function(error) {
@@ -139,16 +138,44 @@ class registerPage extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-          <button onClick={displayCompanyForm}>Company</button>
-          <button onClick={displayTraineeForm}>Trainee</button>
 
+
+	  
+
+
+          <br></br>
+          <div className="  row">
+            <div className="col-3"></div>
+            <button
+              type="submit"
+              class="btn btn-primary col-3 "
+              onClick={displayCompanyForm}
+            >
+              Company
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary col-3 "
+              onClick={displayTraineeForm}
+            >
+              Trainee
+            </button>
+          </div>
           {this.state.displaycompanyForm === true ? (
             <div className="row">
-              <div className="col-md-6 mt-5 mx-auto">
+              <div className="col-md-6 mt-5 mx-auto site-section bg-light">
+                <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <div class="block-heading-1">
+                      <span className="icon-graduation-hat"></span>
+
+                      <h2>Regist As Company</h2>
+                    </div>
+                  </div>
+                </div>
+              
                 <form noValidate onSubmit={onCompanySubmit}>
-                  <h1 className="h3 mb-3 font-weight-normal">
-                    Register as Company
-                  </h1>
+                 
                   <div className="form-group">
                     <label htmlFor="name">Company Name</label>
                     <input
@@ -233,7 +260,6 @@ class registerPage extends Component {
                     />
                   </div>
 
-                  <div>______________________________________</div>
                   <div className="form-group">
                     <label htmlFor="img_path">Image</label>
                     <input
@@ -243,7 +269,11 @@ class registerPage extends Component {
                       onChange={this.getImagePath}
                     />
 
-                    <input type="button" onClick={fileUpload} />
+                    <input
+                      type="button"
+                      onClick={fileUpload}
+                      value="Upload image"
+                    />
 
                     <progress
                       value={this.state.progress}
@@ -251,11 +281,9 @@ class registerPage extends Component {
                       style={{ marginLeft: "15px", marginBottom: "8px" }}
                     />
                   </div>
-
-                  <div>______________________________________</div>
                   <button
                     type="submit"
-                    className="btn btn-lg btn-primary btn-block"
+                    className="btn btn-lg btn-primary btn-block text-center"
                   >
                     Register as Company!
                   </button>
@@ -263,12 +291,18 @@ class registerPage extends Component {
               </div>
             </div>
           ) : (
-            <div className="row">
-              <div className="col-md-6 mt-5 mx-auto">
+            <div className="row ">
+              <div className="col-md-6 mt-5 mx-auto site-section bg-light">
+                <div class="row">
+                  <div class="col-12 text-center mb-5">
+                    <div class="block-heading-1">
+                      <span className="icon-graduation-hat"></span>
+
+                      <h2>Regist As Trainee</h2>
+                    </div>
+                  </div>
+                </div>
                 <form noValidate onSubmit={onTraineeSubmit}>
-                  <h1 className="h3 mb-3 font-weight-normal">
-                    Register as Trainee{" "}
-                  </h1>
                   <div className="form-group">
                     <label htmlFor="name">Full name</label>
                     <input
@@ -329,6 +363,27 @@ class registerPage extends Component {
                       <option value="Yarmouk University">
                         Yarmouk University
                       </option>
+                      <option value="Jordan University of Science and Technology">
+                        Jordan University of Science and Technology
+                      </option>
+                      <option value="Mutah University">
+                        Mutah University{" "}
+                      </option>
+                      <option value="Al-Hussein Bin Talal University">
+                        Al-Hussein Bin Talal University
+                      </option>
+                      <option value="Al al-Bayt University">
+                        Al al-Bayt University
+                      </option>
+                      <option value="Princess Sumaya University for Technology">
+                        Princess Sumaya University for Technology
+                      </option>
+                      <option value="Philadelphia University">
+                        Philadelphia University
+                      </option>
+                      <option value="Al-Zaytoonah University of Jordan">
+                        Al-Zaytoonah University of Jordan
+                      </option>
                     </select>
                   </div>
 
@@ -352,6 +407,15 @@ class registerPage extends Component {
                       <option value="Economy" name="Economy">
                         Economy
                       </option>
+                      <option value="Human Resources" name="Human Resources">
+                        Human Resources
+                      </option>
+                      <option value="management" name="management">
+                        Management
+                      </option>
+                      <option value="social media" name="social media">
+                        Social media
+                      </option>
                     </select>
                   </div>
 
@@ -374,9 +438,11 @@ class registerPage extends Component {
                     Fmail
                   </div>
 
-                  <div>______________________________________</div>
                   <div className="form-group">
                     <label htmlFor="img_path">Image</label>
+
+                 
+                    
                     <input
                       type="file"
                       className="form-control"
@@ -384,20 +450,26 @@ class registerPage extends Component {
                       onChange={this.getImagePath}
                     />
 
-                    <input type="button" onClick={fileUpload} value="Upload image" />
+                    <input
+                    className="btn  btn-primary text-center"
+                      type="button"
+                      onClick={fileUpload}
+                      value="Upload image"
+                    />
+                    
 
                     <progress
+                    
                       value={this.state.progress}
                       max="100"
                       style={{ marginLeft: "15px", marginBottom: "8px" }}
                     />
                   </div>
 
-                  <div>______________________________________</div>
-
                   <button
                     type="submit"
-                    className="btn btn-lg btn-primary btn-block"
+                    className="btn btn-lg btn-primary btn-block text-center"
+                    
                   >
                     Register As Trainee !
                   </button>

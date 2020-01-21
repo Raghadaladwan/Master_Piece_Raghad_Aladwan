@@ -49,7 +49,7 @@ class App extends React.Component {
           <BrowserRouter>
             <HeaderComponent />
             <Route exact path="/" component={LandingPage} cookieItem={this.state} />
-            <Route path="/admindashboardpage" component={AdminDashBoardPage} />
+            <Route path="/admindashboardpage" component={AdminDashBoardPage} ></Route>
             <Route path="/loginpage" component={LoginPage}></Route>
             <Route path="/registerpage" component={RegisterPage}></Route>
             <Route path="/postspage" component={PostsPage} ></Route>

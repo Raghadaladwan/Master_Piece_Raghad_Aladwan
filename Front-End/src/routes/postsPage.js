@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
+
 import PostComponent from "../component/postComponent";
-import { request } from "https";
 
 class postsPage extends Component {
   state = {
@@ -13,8 +13,8 @@ class postsPage extends Component {
     post: []
   };
 
-  // if compant i need all info and i need form to add new post and i will get back company post just
-  // if trainee also i need  all companies posts
+
+
   componentDidMount() {
     axios
       .get(`http://localhost:9000/getUser/${cookie.load("isLoggedIn")._id}`)
@@ -37,11 +37,8 @@ class postsPage extends Component {
         console.log("ERROR");
       });
   }
-  //____________________________________________WOrking here
 
   getAllPosts = () => {
-    console.log("Trainee field", this.state.Trainee_Info.field);
-
     const field = this.state.Trainee_Info.field;
 
     axios
@@ -49,7 +46,6 @@ class postsPage extends Component {
         field
       })
       .then(response => {
-        console.log("response.data", response.data);
         this.setState({ post: response.data });
       });
   };
@@ -75,7 +71,6 @@ class postsPage extends Component {
     };
 
     if (newPost.job_description === "") {
-      console.log("jop description");
       this.setState({ message: "you shoud add Description" });
     } else if (newPost.from_Date === "" || newPost.to_Date === "") {
       this.setState({ message: "you shoud add Date" });
@@ -87,10 +82,9 @@ class postsPage extends Component {
         )
         .then(({ data }) => {
           this.getPost();
-          // console.log("data", data);
         });
     }
-    //************************ Clean the Form After adding data */
+
   };
 
   render() {
@@ -101,11 +95,14 @@ class postsPage extends Component {
     }
     if (comp_info !== null) {
       return (
-        <div>
-          <h1> comp not null {comp_info.name}</h1>
-          <div className="container">
-            <div>
-              <form onSubmit={addPost}>
+        <div style={{ position: "relative", minHeight: "100vh" }}>
+
+          <div className="container col-6 mb-2"  >
+            <div >
+
+              <form onSubmit={addPost}
+              
+              >
                 <div className="form-group">
                   <div className="form-group">
                     <label htmlFor="field">Field</label>
@@ -125,6 +122,15 @@ class postsPage extends Component {
                       </option>
                       <option value="Economy" name="Economy">
                         Economy
+                      </option>
+                      <option value="Human Resources" name="Human Resources">
+                        Human Resources
+                      </option>
+                      <option value="management" name="management">
+                        Management
+                      </option>
+                      <option value="social media" name="social media">
+                        Social media
                       </option>
                     </select>
                   </div>
@@ -151,9 +157,14 @@ class postsPage extends Component {
               </form>
             </div>
           </div>
+
           {this.state.post.map(post => {
             return (
+        
+                <div >
+                  
               <PostComponent
+                
                 key={post._id}
                 post={post}
                 image={this.state.comp_info.img_path}
@@ -162,29 +173,33 @@ class postsPage extends Component {
                 getPost={this.getPost}
                 role={this.state.comp_info.role}
               />
+            </div>
+            
+           
             );
           })}
         </div>
       );
     } else {
       return (
-        <div>
+        <div style={{ position: "relative", minHeight: "100vh" }} >
           {this.state.post.map(companyPost => {
-            console.log(companyPost.traineeRequests.postID);
             return (
-              <div key={companyPost._id}>
+              <span key={companyPost._id}>
                 {companyPost.post.map(innerPost => {
                   return (
+                   
                     <PostComponent
                       key={innerPost._id}
                       post={innerPost}
                       request={companyPost.traineeRequests}
                       companyPost={companyPost._id}
                       Trainee_Info={this.state.Trainee_Info}
+                      getAllPosts={this.getAllPosts}
                     />
                   );
                 })}
-              </div>
+              </span>
             );
           })}
         </div>

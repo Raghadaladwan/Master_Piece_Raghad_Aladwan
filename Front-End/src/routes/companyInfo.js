@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-
 class CompanyInfo extends Component {
   state = {};
 
@@ -14,47 +13,8 @@ class CompanyInfo extends Component {
         this.setState({
           allCompanyInfo: response.data
         })
-        
       );
   };
-
-
-
-
-
-  
-  // sendRequest = () => {
-  //   console.log("send request to company");
-  //   // "5e0a1c8fc70840444638efa2"
-  //   console.log("this.props.location.state.postId",this.props.location.state.postId)
-  //   axios
-  //   .post(
-  //     `http://localhost:9000/traineeRequest/${cookie.load("isLoggedIn")._id}/${this.props.location.state.postId}/${this.props.location.state._id}`
-  //   )
-
-
-  // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   goBack = () => {
     this.props.history.push("/postspage");
@@ -62,9 +22,16 @@ class CompanyInfo extends Component {
 
   render() {
     return this.state.allCompanyInfo ? (
-      <div className="container">
+      <div
+        className="container"
+        style={{ position: "relative", minHeight: "100vh" }}
+      >
         <span>
-          <img  style={{ width: 150, height: 150 }} src={this.state.allCompanyInfo.img_path} alt=""></img>
+          <img
+            style={{ width: 150, height: 150 }}
+            src={this.state.allCompanyInfo.img_path}
+            alt=""
+          ></img>
         </span>
         <h2>Company :{this.state.allCompanyInfo.name} </h2>
         <h3> City : {this.state.allCompanyInfo.city}</h3>

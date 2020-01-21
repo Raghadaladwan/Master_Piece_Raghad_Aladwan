@@ -61,8 +61,6 @@ class userProfilePage extends Component {
   };
 
   updateCompanyInfo = async event => {
-    console.log(this.state.companyInfo);
-
     event.preventDefault();
 
     const newCompanyInfo = {
@@ -222,27 +220,32 @@ class userProfilePage extends Component {
   renderEditCompanyInfo = () => {
     return (
       <div className="container">
-        <div>
+        <div className="col-md-6  mx-auto bg-lightv">
           <form
+            class="form-group"
             onSubmit={this.updateCompanyInfo}
             ref={form => (this.form = form)}
           >
-            <h1 className="h3 mb-3 font-weight-normal">
-              Edit your Information
-            </h1>
+            <div class="col-12 text-center ">
+              <div class="block-heading-1">
+                <h2>Edit your Information</h2>
+              </div>
+            </div>
 
             <div className="form-group">
               <label>Company Name : </label>
               <input
+                className="form-control"
                 type="text"
                 name="name"
                 defaultValue={this.state.companyInfo.name}
                 ref="name"
               />
             </div>
-            <div className="form-group">
+            <div class="form-group">
               <label>Email : </label>
               <input
+                className="form-control"
                 type="text"
                 name="email"
                 defaultValue={this.state.companyInfo.email}
@@ -252,6 +255,7 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>City : </label>
               <input
+                className="form-control"
                 type="text"
                 name="city"
                 defaultValue={this.state.companyInfo.city}
@@ -261,6 +265,7 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>Location : </label>
               <input
+                className="form-control"
                 type="text"
                 name="location"
                 defaultValue={this.state.companyInfo.location}
@@ -270,6 +275,7 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>Website : </label>
               <input
+                className="form-control"
                 type="text"
                 name="website"
                 defaultValue={this.state.companyInfo.website}
@@ -279,6 +285,7 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>Password : </label>
               <input
+                className="form-control"
                 type="password"
                 name="password"
                 defaultValue={this.state.companyInfo.password}
@@ -288,16 +295,25 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>About Company : </label>
               <textarea
+                className="form-control"
                 type="password"
                 name="comp_description"
                 defaultValue={this.state.companyInfo.comp_description}
                 ref="comp_description"
               />
             </div>
-
-            <button onClick={this.edit_info}>Cancel</button>
-
-            <button onClick={this.updateCompanyInfo}>Save</button>
+            <button
+              className="btn btn-lg btn-primary btn-block text-center"
+              onClick={this.updateCompanyInfo}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-secondary btn-lg btn-block active"
+              onClick={this.edit_info}
+            >
+              Cancel
+            </button>
           </form>
         </div>
       </div>
@@ -305,46 +321,86 @@ class userProfilePage extends Component {
   };
   renderDefaultCompanyView = () => {
     return (
-      <div>
-        <div onDoubleClick={this.edit_info}>
-          <span>Company Name : </span>
-          {this.state.companyInfo.name}
-        </div>
-        <div onDoubleClick={this.edit_info}>
-          <span>Website : </span>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href={this.state.companyInfo.website}
-          >
-            {" "}
-            {this.state.companyInfo.website}
-          </a>
-        </div>
-        <div onDoubleClick={this.edit_info}>
-          <span>City: </span>
-          {this.state.companyInfo.city}
-        </div>
+      
+      
+      
 
-        <div onDoubleClick={this.edit_info}>
-          <span>location : </span>
-          {this.state.companyInfo.location}
-        </div>
+      <div
+        className="container"
+        style={{ position: "relative", minHeight: "100vh" }}
+      >
 
-        <div onDoubleClick={this.edit_info}>
-          <span> About Company : </span>
-          {this.state.companyInfo.comp_description}
-        </div>
 
-        <div onDoubleClick={this.edit_info}>
-          <span>Your image : </span>
-          <img
-            alt=""
-            style={{ width: 150, height: 150 }}
-            src={this.state.companyInfo.img_path}
-          ></img>
+        <br/>
+        <br/>
+      
+        <div className="row pt-10">
+          <div className='col-5'>
+            <div onDoubleClick={this.edit_info}>
+              <img
+                alt=""
+                style={{ width: '100%', height: '100%' }}
+                src={this.state.companyInfo.img_path}
+              ></img>
+            </div>
+          </div>
+
+          <div className="col-3  form-group">
+            <div
+              class="form-control "
+              style={{ marginTop: "40%" }}
+              onDoubleClick={this.edit_info}
+            >
+              {this.state.companyInfo.name}
+            </div>
+          </div>
         </div>
-      </div>
+        
+        <br></br>
+
+
+        <div className="  row " style={{ width: "50rem" }}>
+
+        
+            <div className=" col-md-10 offset-md-1  list-group-item" onDoubleClick={this.edit_info}>
+              <span style={{ color:'#EC7063'}}><b >Website :&nbsp;&nbsp; &nbsp;</b> </span>
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href={this.state.companyInfo.website}
+              >
+                {this.state.companyInfo.website}
+              </a>
+            </div>
+
+            <div
+              className="col-md-10 offset-md-1 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span style={{ color:'#EC7063'}}> <b>We Are In: &nbsp;   </b>
+               </span>
+                {this.state.companyInfo.city}
+            </div>
+
+            <div className="col-md-10 offset-md-1 list-group-item" onDoubleClick={this.edit_info}>
+              <span style={{ color:'#EC7063'}}><b>Location</b> :&nbsp; &nbsp;  </span>
+              {this.state.companyInfo.location}
+            </div>
+
+            <div
+              className="col-md-10 offset-md-1 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span style={{ color:'#EC7063'}}> <b>About Us</b> : &nbsp;&nbsp;</span>
+              {this.state.companyInfo.comp_description}
+            </div>
+          </div>
+          <div class="card-body">
+            <small class= " col-md-10 offset-md-1 text-muted">Last updated 3 mins ago</small>
+          </div>
+          </div>
+        
+     
     );
   };
 

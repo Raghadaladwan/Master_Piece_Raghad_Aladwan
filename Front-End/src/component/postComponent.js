@@ -8,8 +8,7 @@ class postComponent extends Component {
   };
 
   componentDidMount = () => {
-    if(this.props.Trainee_Info != null)
-    this.getRequest();
+    if (this.props.Trainee_Info != null) this.getRequest();
   };
 
   deletePost = id_post => {
@@ -33,14 +32,12 @@ class postComponent extends Component {
         }/${this.props.post._id}/${this.props.companyPost}`
       )
       .then(response => {
-        if (  response.data != null)
+        if (response.data != null)
           this.setState({ btn: response.data.traineeRequests[0].btn });
-        console.log("bittar", response.data);
       });
   };
 
   aboutCompany = () => {
-
     this.props.history.push({
       pathname: "/CompanyInfo",
       state: {
@@ -51,58 +48,56 @@ class postComponent extends Component {
   };
 
   sendRequest = () => {
- 
-    console.log(
-      "this.props.Trainee_Info.fullName",
-      this.props.Trainee_Info.fullName
-    );
-
     let newRequest = {
       userID: cookie.load("isLoggedIn")._id,
       postID: this.props.post._id,
-      Accepted: false,
+      Accepted: null,
       img_path: this.props.Trainee_Info.img_path,
       fullName: this.props.Trainee_Info.fullName,
       field: this.props.Trainee_Info.field,
       university: this.props.Trainee_Info.university,
       btn: "disabled"
     };
-    console.log(newRequest);
     axios
       .post(
         `http://localhost:9000/traineeRequest/${this.props.companyPost}`,
         newRequest
       )
-      .then(({ data }) => {
-        console.log("data from component post", data);
+      .then(res => {
+        //try to get all post again!!!!!!
+        this.setState({
+          btn: "disabled"
+        });
       });
-
-    window.location.reload();
   };
 
   renderCopmanyPosts = () => {
     return (
       <div className="container">
-        <h4>post COMPONENT_______________</h4>
-
-        <div>
-          <h4>
-            post image
-            <img
-              src={this.props.image}
-              style={{ width: 150, height: 150 }}
-              alt=""
-            ></img>
-          </h4>
-          <h4>post field {this.props.post.field}</h4>
-
-          <h4>post Job Descripthion {this.props.post.job_description}</h4>
-          <h4>
-            from Date {this.props.post.from_Date} to Date
-            {this.props.post.to_Date}
-          </h4>
+        <div className="col-6" style={{ maxWidth: "18rem" }}>
           <div>
-            <button onClick={this.deletePost.bind(this)}>delete</button>
+            <h4 className="">{this.props.post.field}</h4>
+
+            <div className='class="card-text'>
+              <h2 className="card-body">
+               
+                Job Descripthion : {this.props.post.job_description}
+              </h2>
+              
+              <span>
+                From : {this.props.post.from_Date}
+                <br /> To:
+                {this.props.post.to_Date}
+              </span>
+            </div>
+            <div>
+              <button
+                className="btn btn-danger"
+                onClick={this.deletePost.bind(this)}
+              >
+                delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -110,43 +105,45 @@ class postComponent extends Component {
   };
 
   renderTraineePosts = () => {
-    let req = this.props.request.filter(id => {
-      return id !== this.props.post._id;
-    });
-
     return (
-      <div className="container">
-
-        <div>
-          <h4>
-            post image
+      <div className="container ">
+        <div className="row mr-10 ">
+          <div className="col-6  ">
             <img
               src={this.props.post.img_path}
-              style={{ width: 150, height: 150 }}
+              style={{ width: "210px", height: "230px" }}
               alt=""
             ></img>
-          </h4>
-          <h4>Field :{this.props.post.field}</h4>
+          </div>
 
-          <h4>Job Descripthion : {this.props.post.job_description}</h4>
-          <h4>
-            From Date :{this.props.post.from_Date}
-            <br />
-            To Date:{this.props.post.to_Date}
-          </h4>
-          <div>
-            <button className="btn btn-info" onClick={this.aboutCompany}>
-              More About Company
-            </button>
-            <button
-              className="btn btn-warning"
-              onClick={this.sendRequest}
-              disabled={this.state.btn}
-            >
-              Send Request
-            </button>
+          <div className="col-6 ">
+            <h4 className="card-header h2">{this.props.post.field}</h4>
+
+            <h4>Job Descripthion : {this.props.post.job_description}</h4>
+            <h4>
+              From Date :{this.props.post.from_Date}
+              <br />
+              To Date:{this.props.post.to_Date}
+            </h4>
+            <div className="row">
+              <button
+                className="btn btn-info col-6"
+                onClick={this.aboutCompany}
+              >
+                More About Company
+              </button>
+
+              <button
+                className="btn btn-warning col-6"
+                onClick={this.sendRequest}
+                disabled={this.state.btn}
+              >
+                Send Request
+              </button>
+            </div>
           </div>
         </div>
+        <br />
       </div>
     );
   };

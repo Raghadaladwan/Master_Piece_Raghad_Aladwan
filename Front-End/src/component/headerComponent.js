@@ -9,7 +9,6 @@ class headerComponent extends Component {
 
   signOut = () => {
     if (cookie.load("isLoggedIn") !== undefined) {
-      console.log("kill");
       cookie.remove("isLoggedIn");
       window.location.reload();
     }
@@ -22,9 +21,7 @@ class headerComponent extends Component {
       axios
         .get(`http://localhost:9000/loginUser/${cookie.load("isLoggedIn")}`)
         .then(response => {
-          this.setState({ userInfo: response.data }, () => {
-            console.log("LOGIN state ", this.state);
-          });
+          this.setState({ userInfo: response.data }, () => {});
         });
     } else {
       return false;
@@ -36,12 +33,11 @@ class headerComponent extends Component {
       return (
         <div className="header">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          
-              <Link className="navbar-brand" to={"/"}>
-                {/* Add image */}
-                LOGO
-              </Link>
-           
+            <Link className="navbar-brand" to={"/"}>
+              {/* Add image */}
+              LOGO
+            </Link>
+
             <button
               className="navbar-toggler"
               type="button"
@@ -56,31 +52,24 @@ class headerComponent extends Component {
 
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <a className="nav-item nav-link" href="/aboutUs">
-                  ABOUT US
-                </a>
-
                 <a className="nav-item nav-link" href="/">
-                  Landing page
+                  Home
                 </a>
 
                 <a className="nav-item nav-link" href="/registerpage">
                   Register
                 </a>
 
-               
-                  <Link className="nav-item nav-link"
-                    to={
-                      cookie.load("isLoggedIn") === undefined
-                        ? "/loginpage"
-                        : "/"
-                    }
-                  >
-                    {cookie.load("isLoggedIn") === undefined
-                      ? "Log in"
-                      : "Log out"}
-                  </Link>
-                
+                <Link
+                  className="nav-item nav-link"
+                  to={
+                    cookie.load("isLoggedIn") === undefined ? "/loginpage" : "/"
+                  }
+                >
+                  {cookie.load("isLoggedIn") === undefined
+                    ? "Log in"
+                    : "Log out"}
+                </Link>
               </div>
             </div>
           </nav>
@@ -90,12 +79,11 @@ class headerComponent extends Component {
       return (
         <div className="header">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            
-              <Link className="navbar-brand" to={"/"}>
-                {/* Add image */}
-                LOGO
-              </Link>
-            
+            <Link className="navbar-brand" to={"/"}>
+              {/* Add image */}
+              LOGO
+            </Link>
+
             <button
               className="navbar-toggler"
               type="button"
@@ -109,12 +97,8 @@ class headerComponent extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <a className="nav-item nav-link active" href="/aboutUs">
-                  ABOUT US
-                </a>
-
                 <a className="nav-item nav-link" href="/">
-                  LANDING
+                  Home
                 </a>
 
                 <a className="nav-item nav-link" href="/postspage">

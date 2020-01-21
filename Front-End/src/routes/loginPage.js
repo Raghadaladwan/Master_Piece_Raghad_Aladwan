@@ -34,13 +34,10 @@ export default class loginPage extends Component {
         } else {
           this.setState({ massage: data });
         }
-
-        console.log("data :", data);
       })
       .catch(error => {
         console.log("error");
       });
-  
   };
 
   render() {
@@ -51,7 +48,10 @@ export default class loginPage extends Component {
       return <div></div>;
     } else {
       return (
-        <div className="form-group">
+        <div
+          className="form-group"
+          style={{ position: "relative", minHeight: "80vh" }}
+        >
           <div
             style={{
               boxShadow: "0 4px 8px 0 rgba(0,0,0,0.8)",
@@ -62,9 +62,9 @@ export default class loginPage extends Component {
               marginTop: "50px"
             }}
           >
-            <div>
+            <div className="bg-light ">
               <label htmlFor="name">
-                <h3> Email</h3>
+                <h2> Email</h2>
               </label>
               <input
                 className="form-control"
@@ -77,7 +77,7 @@ export default class loginPage extends Component {
               />
 
               <label htmlFor="password">
-                <h3> Password</h3>
+                <h2> Password</h2>
               </label>
               <input
                 className="form-control"
@@ -90,7 +90,10 @@ export default class loginPage extends Component {
               />
               <br />
 
-              <button onClick={checkUserinfo} className="btn btn-info">
+              <button
+                onClick={checkUserinfo}
+                className="btn btn-lg btn-primary btn-block text-center"
+              >
                 Login
               </button>
             </div>

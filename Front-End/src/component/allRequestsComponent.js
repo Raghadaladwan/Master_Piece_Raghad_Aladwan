@@ -1,19 +1,21 @@
 import React, { Component } from "react";
+import cookie from "react-cookies";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+class requestsComponent extends Component {
+  state = {
+    Trainee_Info: null
+  };
 
-export default class requestsComponent extends Component {
-
-
-  accepted=()=>{
-
-    console.log("Accepted")
-
-  }
-
-
-  rejected =()=>{
-
-    console.log("Rejected")
-  }
+  rejectOrAccepted = state => {
+    axios.post(
+      `http://localhost:9000/rejectOrAccept/${cookie.load("isLoggedIn")._id}/${
+        this.props.companyRequests.postID
+      }`,
+      { state }
+    );
+    window.location.reload();
+  };
 
   render() {
     return (
@@ -30,13 +32,16 @@ export default class requestsComponent extends Component {
           <h4>University :{this.props.companyRequests.university}</h4>
 
           <div>
-            <button className="btn btn-success" onClick={this.accepted}>
+            <button
+              className="btn btn-success"
+              onClick={this.rejectOrAccepted.bind(this, true)}
+            >
               Accept
             </button>
             <button
               ref="btn"
               className="btn btn-danger"
-              onClick={this.rejected}
+              onClick={this.rejectOrAccepted.bind(this, false)}
             >
               reject
             </button>
@@ -46,3 +51,5 @@ export default class requestsComponent extends Component {
     );
   }
 }
+
+export default withRouter(requestsComponent);
