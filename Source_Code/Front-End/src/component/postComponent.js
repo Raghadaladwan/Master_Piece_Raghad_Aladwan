@@ -116,7 +116,7 @@ class postComponent extends Component {
     return (
 
     // img size px // button at buttom // dashboard card width 100%
-      <div className="container ">
+      <div className="container bg-light">
        <br></br>
        <br></br>
        <br></br>
@@ -140,22 +140,26 @@ class postComponent extends Component {
            
             <small class= " col-md-10 offset-md-1 text-muted">
             <div>
+              <b>
               From Date :{this.props.post.from_Date}
+              </b>
            <br></br>
+           <b>
               To Date:{this.props.post.to_Date}
+              </b>
               </div>
             
             </small>
             <div>
               <button
-                className="btn btn-info col-6"
+                className="btn btn-dark text-white col-6"
                 onClick={this.aboutCompany}
               >
                 More About Company
               </button>
 
               <button
-                className="btn btn-warning col-6"
+                className="btn btn-primary col-6"
                 onClick={this.sendRequest}
                 disabled={this.state.btn}
               >

@@ -69,14 +69,18 @@ class adminDashBoardPage extends Component {
   };
 
   TranineeRequest = () => {
+
+   
+
     return (
-      <div>
+      <div >
         {this.state.tranineeRequest.map((company, index) => {
           return (
-            <div key={index}>
+            <div className='  row' key={index}>
               {company.traineeRequests.map((acceptedOrNot, index) => {
                 return (
-                  <div key={index}>
+                  <div className=' col-4' key={index}>
+                 
                     {acceptedOrNot.Accepted}
                     <AcceptedOrRejected
                       companyName={company.name}
@@ -90,7 +94,11 @@ class adminDashBoardPage extends Component {
             </div>
           );
         })}
-      </div>
+
+      
+        
+      </div> 
+      
     );
   };
   render() {

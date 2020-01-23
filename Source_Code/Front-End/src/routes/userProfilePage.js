@@ -92,19 +92,28 @@ class userProfilePage extends Component {
 
   renderEditTraineeView = () => {
     return (
-      <div className="container">
-        <div>
+      <div className="container"
+      style={{ position: "relative", minHeight: "100vh" }}>
+        <br></br>
+        <br></br>
+        <div className="col-md-6  mx-auto bg-light " 
+        >
           <form
+            class="form-group"
             onSubmit={this.updateTraineeInfo}
             ref={form => (this.form = form)}
           >
-            <h1 className="h3 mb-3 font-weight-normal">
-              {" "}
-              Edit your Information{" "}
-            </h1>
+             <div class="col-12 text-center ">
+              <div class="block-heading-1">
+                <h2>Edit your Information</h2>
+              </div>
+            </div>
+          
+
             <div className="form-group">
               <label>Full Name</label>
               <input
+                className="form-control"
                 type="text"
                 name="fullName"
                 defaultValue={this.state.traineeInfo.fullName}
@@ -114,6 +123,7 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>Email : </label>
               <input
+                className="form-control"
                 type="text"
                 name="email"
                 defaultValue={this.state.traineeInfo.email}
@@ -123,6 +133,7 @@ class userProfilePage extends Component {
             <div className="form-group">
               <label>Password : </label>
               <input
+                className="form-control"
                 type="password"
                 name="password"
                 defaultValue={this.state.traineeInfo.password}
@@ -132,7 +143,10 @@ class userProfilePage extends Component {
 
             <div className="form-group">
               <label> University</label>
-              <select ref={select => (this.uniType = select)}>
+              <select
+                className="form-control"
+                ref={select => (this.uniType = select)}
+              >
                 <option>{this.state.traineeInfo.university}</option>
                 <option className="dropdown-item" value="University of Jordan">
                   University of Jordan
@@ -151,7 +165,10 @@ class userProfilePage extends Component {
 
             <div className="form-group">
               <label htmlFor="field">Field</label>
-              <select ref={select => (this.fieldType = select)}>
+              <select
+                className="form-control"
+                ref={select => (this.fieldType = select)}
+              >
                 <option>{this.state.traineeInfo.field}</option>
                 <option className="dropdown-item" name="IT" value="IT">
                   IT
@@ -164,9 +181,20 @@ class userProfilePage extends Component {
                 </option>
               </select>
             </div>
-            <button onClick={this.edit_info}>Cancel</button>
-
-            <button onClick={this.updateTraineeInfo}>Save</button>
+            <br></br>
+            <br></br>
+            <button
+              className="btn btn-lg btn-primary btn-block text-center"
+              onClick={this.updateTraineeInfo}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-secondary btn-lg btn-block active"
+              onClick={this.edit_info}
+            >
+              Cancel
+            </button>
           </form>
         </div>
       </div>
@@ -175,43 +203,85 @@ class userProfilePage extends Component {
 
   renderDefaultTraineeInfo = () => {
     return (
-      <div>
-        <div onDoubleClick={this.edit_info}>
-          <span>FullName : </span>
-          {this.state.traineeInfo.fullName}
-        </div>
-        <div onDoubleClick={this.edit_info}>
-          <span>Email : </span>
-          {this.state.traineeInfo.email}
-        </div>
-        <div onDoubleClick={this.edit_info}>
-          <span>Field : </span>
+      <div
+        className="container bg-light"
+        style={{ position: "relative", minHeight: "100vh" }}
+      >
+        <br />
+        <br />
 
-          {this.state.traineeInfo.field}
+        <div className="row pt-10">
+          <div className="col-5" onDoubleClick={this.edit_info}>
+            <img
+              className="img-thumbnail bg-light"
+              alt=""
+              style={{ width: "100%", height: "100%" }}
+              src={this.state.traineeInfo.img_path}
+            ></img>
+          </div>
+          <div className="col-3  form-group">
+            <div
+              style={{ marginTop: "40%" }}
+              onDoubleClick={this.edit_info}
+            ></div>
+            <div className="list-group-item" onDoubleClick={this.edit_info}>
+              {this.state.traineeInfo.fullName}
+            </div>
+          </div>
         </div>
-        <div onDoubleClick={this.edit_info}>
-          <span>University : </span>
+        <br></br>
+        <br></br>
+        <div className="row">
+          
+          <div className="col-md offset-2">
+            <div
+              className="col-md-10 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span> Field &nbsp;&nbsp;&nbsp; : </span>
 
-          {this.state.traineeInfo.university}
-        </div>
+              {this.state.traineeInfo.field}
+            </div>
+            <div
+              className="col-md-10 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span>Gender : </span>
+              {this.state.traineeInfo.gender}
+            </div>
+            <div
+              className="col-md-10 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span>Email &nbsp;&nbsp;&nbsp;: </span>
+              {this.state.traineeInfo.email}
+            </div>
 
-        <div onDoubleClick={this.edit_info}>
-          <span>Password : </span>
-          {this.state.traineeInfo.password}
-        </div>
+            <div
+              className="col-md-10 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span>University : </span>
 
-        <div onDoubleClick={this.edit_info}>
-          <span>Gender : </span>
-          {this.state.traineeInfo.gender}
-        </div>
+              {this.state.traineeInfo.university}
+            </div>
 
-        <div onDoubleClick={this.edit_info}>
-          <span>Your image : </span>
-          <img
-            alt=""
-            style={{ width: 150, height: 150 }}
-            src={this.state.traineeInfo.img_path}
-          ></img>
+            <div
+              className="col-md-10 list-group-item"
+              onDoubleClick={this.edit_info}
+            >
+              <span>Password : </span>
+
+              <input
+                className="form-control"
+                type="password"
+                value={this.state.traineeInfo.password}
+              />
+            </div>
+            <div onDoubleClick={this.edit_info} className="col-md-10 list-group-item d-flex justify-content-end ">
+              <button  className='btn btn-info '>Click any field to edit</button>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -220,7 +290,7 @@ class userProfilePage extends Component {
   renderEditCompanyInfo = () => {
     return (
       <div className="container">
-        <div className="col-md-6  mx-auto bg-lightv">
+        <div className="col-md-6  mx-auto bg-light">
           <form
             class="form-group"
             onSubmit={this.updateCompanyInfo}
@@ -324,7 +394,7 @@ class userProfilePage extends Component {
     return (
       <div
         className="container"
-        style={{ position: "relative", minHeight: "100vh"   }}
+        style={{ position: "relative", minHeight: "100vh" }}
       >
         <br />
         <br />
@@ -333,6 +403,7 @@ class userProfilePage extends Component {
           <div className="col-5">
             <div onDoubleClick={this.edit_info}>
               <img
+                className="img-thumbnail"
                 alt=""
                 style={{ width: "100%", height: "100%" }}
                 src={this.state.companyInfo.img_path}
@@ -369,7 +440,7 @@ class userProfilePage extends Component {
                 onDoubleClick={this.edit_info}
               >
                 <span style={{ color: "#EC7063" }}>
-                  <b>Website :&nbsp;&nbsp; &nbsp;</b>{" "}
+                  <b>Website :&nbsp;&nbsp;&nbsp;</b>{" "}
                 </span>
                 <a
                   rel="noopener noreferrer"

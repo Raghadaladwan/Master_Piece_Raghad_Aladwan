@@ -94,7 +94,7 @@ class postsPage extends Component {
     if (comp_info !== null) {
       return (
         <div style={{ position: "relative", minHeight: "100vh" }}>
-          <div className="container col-6 mb-2">
+          <div className="container col-6 mb-2 ">
             <div>
               <form onSubmit={addPost}>
                 <div className="form-group">
