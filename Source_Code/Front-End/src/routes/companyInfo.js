@@ -41,19 +41,18 @@ class CompanyInfo extends Component {
           </div>
 
           <div className="col-6 align-self-center  ">
-            <h1 className='text-white'>Company :
-            <b>{this.state.allCompanyInfo.name} </b></h1>
+            <h1 className="text-white">
+              <b>{this.state.allCompanyInfo.name} </b>
+            </h1>
           </div>
         </div>
 
         <div className="row">
           <div className="col-4 ">
-            <div className='container text-white' >
+            <div className="container text-white">
               <br></br>
-              <h3 >
-              About Company :
-              </h3>
-             
+              <h3>About Company :</h3>
+
               <p>{this.state.allCompanyInfo.comp_description}</p>
             </div>
           </div>
@@ -61,30 +60,41 @@ class CompanyInfo extends Component {
             {" "}
             <div className="col-4"></div>
             <div>
-            <h3 className='list-group-item'>
-              Visit Us &nbsp;&nbsp; :&nbsp;&nbsp;
-              <a
-                href={this.state.allCompanyInfo.website}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {this.state.allCompanyInfo.website}
-              </a>
-            </h3>
+              <h3 className="list-group-item">
+                Visit Us &nbsp;&nbsp; :&nbsp;&nbsp;
+                <a
+                  href={this.state.allCompanyInfo.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {this.state.allCompanyInfo.website}
+                </a>
+              </h3>
 
-              <h3 className='list-group-item'> City &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.allCompanyInfo.city}</h3>
-              <h3 className='list-group-item'> We are in : &nbsp;{this.state.allCompanyInfo.location}</h3>
-              <h3 className='list-group-item'> Contact Us : {this.state.allCompanyInfo.email}</h3>
+              <h3 className="list-group-item">
+                {" "}
+                City &nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;
+                {this.state.allCompanyInfo.city}
+              </h3>
+              <h3 className="list-group-item">
+                {" "}
+                We are in : &nbsp;{this.state.allCompanyInfo.location}
+              </h3>
+              <h3 className="list-group-item">
+                {" "}
+                Contact Us : {this.state.allCompanyInfo.email}
+              </h3>
             </div>
           </div>
         </div>
 
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-<br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         <div className="row justify-content-center">
           <button className="btn  btn-secondary col-4" onClick={this.goBack}>
             Go Back

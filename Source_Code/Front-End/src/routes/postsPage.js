@@ -157,7 +157,10 @@ class postsPage extends Component {
                 </div>
                 <br></br>
                 <div className="row justify-content-center">
-                  <button type="submit" className=" col-6 btn btn-primary btn-block">
+                  <button
+                    type="submit"
+                    className=" col-6 btn btn-primary btn-block"
+                  >
                     Add Post
                   </button>
                 </div>

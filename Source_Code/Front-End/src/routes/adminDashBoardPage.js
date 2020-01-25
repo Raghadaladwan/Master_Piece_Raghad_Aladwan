@@ -47,7 +47,9 @@ class adminDashBoardPage extends Component {
     });
     let companyRequests = companyRequestsFilter.map(requests => {
       return (
+        <div >
         <AllRequestsComponent key={requests._id} companyRequests={requests} />
+        </div>
       );
     });
 
@@ -69,18 +71,14 @@ class adminDashBoardPage extends Component {
   };
 
   TranineeRequest = () => {
-
-   
-
     return (
-      <div >
+      <div style={{ position: "relative", minHeight: "100vh" }}>
         {this.state.tranineeRequest.map((company, index) => {
           return (
-            <div className='  row' key={index}>
+            <div className="  row" key={index}>
               {company.traineeRequests.map((acceptedOrNot, index) => {
                 return (
-                  <div className=' col-4' key={index}>
-                 
+                  <div className=" col-4" key={index}>
                     {acceptedOrNot.Accepted}
                     <AcceptedOrRejected
                       companyName={company.name}
@@ -94,11 +92,7 @@ class adminDashBoardPage extends Component {
             </div>
           );
         })}
-
-      
-        
-      </div> 
-      
+      </div>
     );
   };
   render() {

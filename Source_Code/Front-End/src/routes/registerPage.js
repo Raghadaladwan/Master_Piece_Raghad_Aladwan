@@ -17,7 +17,7 @@ class registerPage extends Component {
     errors: {},
 
     companyName: "",
-    website: "https://www.",
+    website: "https://",
     city: "",
     location: "",
     comp_description: "",
@@ -25,7 +25,19 @@ class registerPage extends Component {
     image: "",
     progress: 0,
     displaycompanyForm: false,
-    displaytraineeForm: false
+    displaytraineeForm: false,
+
+    message_Fullname: "",
+    message_Email: "",
+    message_Password: "",
+    message_University: "",
+    message_Field: "",
+    message_Gender: "",
+
+    message_companyName: "",
+    message_Website: "",
+    message_city: "",
+    message_Location: ""
   };
 
   displayCompanyForm = () => {
@@ -90,13 +102,52 @@ class registerPage extends Component {
       role: "trainee"
     };
 
-    await axios
-      .post("http://localhost:9000/traineeregister", { newUser })
-
-      .then(response => {
-        console.log("Registered");
-        this.props.history.push("/loginpage");
+    if (newUser.fullName === "") {
+      console.log("FULL NAMR");
+      console.log("new.full", newUser.fullName);
+      this.setState({ message_Fullname: "You shoud add your name" });
+    }
+    if (newUser.email === "") {
+      this.setState({
+        message_Email: "You shoud inter your email"
       });
+    }
+    if (newUser.password === "") {
+      this.setState({
+        message_Password: "Password is Required"
+      });
+    }
+    if (newUser.university === "") {
+      this.setState({
+        message_University: "You should choose your univirsity"
+      });
+    }
+    if (newUser.field === "") {
+      this.setState({
+        message_Field: "You shoud add your field"
+      });
+    }
+    if (newUser.gender === "") {
+      this.setState({
+        message_Gender: "This field is empty"
+      });
+    }
+    if (
+      newUser.fullName !== "" &&
+      newUser.email !== "" &&
+      newUser.password !== "" &&
+      newUser.university !== "" &&
+      newUser.field !== "" &&
+      newUser.gender !== ""
+    ) {
+      await axios
+        .post("http://localhost:9000/traineeregister", { newUser })
+
+        .then(response => {
+          console.log("Registered");
+          this.props.history.push("/loginpage");
+        });
+    }
   };
 
   onCompanySubmit = async event => {
@@ -115,14 +166,59 @@ class registerPage extends Component {
       role: "company"
     };
 
-    await axios
-      .post("http://localhost:9000/companyregister", { newCompany })
-      .then(response => {
-        this.props.history.push("/loginpage");
-      })
-      .catch(function(error) {
-        console.log(error.response);
+    if (newCompany.companyName === "") {
+      this.setState({
+        message_companyName: "Company name is Required"
       });
+    }
+    if (newCompany.email === "") {
+      this.setState({
+        message_Email: "Company Email is Required"
+      });
+    }
+    if (newCompany.password === "") {
+      this.setState({
+        message_Password: " Password is Required"
+      });
+    }
+    if (newCompany.website === "") {
+      this.setState({
+        message_Website: "Let Us Visit Your Website"
+      });
+    }
+    if (newCompany.city === "") {
+      this.setState({
+        message_city: "City is Required"
+      });
+    }
+    if (newCompany.location === "") {
+      this.setState({
+        message_Location: "You shoud add your Location"
+      });
+    }
+    if (newCompany.comp_description === "") {
+      this.setState({
+        message_Description: "Tell us more about your company"
+      });
+    }
+    if (
+      newCompany.companyName !== "" &&
+      newCompany.email !== "" &&
+      newCompany.password !== "" &&
+      newCompany.website !== "" &&
+      newCompany.city !== "" &&
+      newCompany.location !== "" &&
+      newCompany.comp_description !== ""
+    ) {
+      await axios
+        .post("http://localhost:9000/companyregister", { newCompany })
+        .then(response => {
+          this.props.history.push("/loginpage");
+        })
+        .catch(function(error) {
+          console.log(error.response);
+        });
+    }
   };
 
   render() {
@@ -138,17 +234,12 @@ class registerPage extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-
-
-	  
-
-
           <br></br>
           <div className="  row">
             <div className="col-3"></div>
             <button
               type="submit"
-              class="btn btn-primary col-3 "
+              className="btn btn-primary col-3 "
               onClick={displayCompanyForm}
             >
               Company
@@ -164,18 +255,17 @@ class registerPage extends Component {
           {this.state.displaycompanyForm === true ? (
             <div className="row">
               <div className="col-md-6 mt-5 mx-auto site-section bg-light">
-                <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <div class="block-heading-1">
+                <div className="row">
+                  <div className="col-12 text-center mb-5">
+                    <div className="block-heading-1">
                       <span className="icon-graduation-hat"></span>
 
                       <h2>Regist As Company</h2>
                     </div>
                   </div>
                 </div>
-              
+
                 <form noValidate onSubmit={onCompanySubmit}>
-                 
                   <div className="form-group">
                     <label htmlFor="name">Company Name</label>
                     <input
@@ -186,6 +276,13 @@ class registerPage extends Component {
                       value={this.state.companyName}
                       onChange={onChange}
                     />
+                  </div>
+                  <div
+                    className={
+                      this.state.message_companyName ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_companyName}
                   </div>
 
                   <div className="form-group">
@@ -200,6 +297,14 @@ class registerPage extends Component {
                     />
                   </div>
 
+                  <div
+                    className={
+                      this.state.message_Email ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Email}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input
@@ -212,6 +317,14 @@ class registerPage extends Component {
                       required
                     />
                   </div>
+                  <div
+                    className={
+                      this.state.message_Password ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Password}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="website">website</label>
                     <input
@@ -220,9 +333,17 @@ class registerPage extends Component {
                       name="website"
                       placeholder="website"
                       value={this.state.website}
+                      placeholder="https://turo.com"
                       onChange={onChange}
                       required
                     />
+                  </div>
+                  <div
+                    className={
+                      this.state.message_Website ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Website}
                   </div>
 
                   <div className="form-group">
@@ -236,6 +357,14 @@ class registerPage extends Component {
                       onChange={onChange}
                     />
                   </div>
+                  <div
+                    className={
+                      this.state.message_city ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_city}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="location">location</label>
                     <input
@@ -248,8 +377,16 @@ class registerPage extends Component {
                     />
                   </div>
 
+                  <div
+                    className={
+                      this.state.message_Location ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Location}
+                  </div>
+
                   <div className="form-group">
-                    <label htmlFor="description">description</label>
+                    <label htmlFor="description">Description</label>
                     <textarea
                       type="text"
                       className="form-control"
@@ -258,6 +395,15 @@ class registerPage extends Component {
                       value={this.state.comp_description}
                       onChange={onChange}
                     />
+                  </div>
+                  <div
+                    className={
+                      this.state.message_Description
+                        ? "alert alert-dark"
+                        : null
+                    }
+                  >
+                    {this.state.message_Description}
                   </div>
 
                   <div className="form-group">
@@ -293,9 +439,9 @@ class registerPage extends Component {
           ) : (
             <div className="row ">
               <div className="col-md-6 mt-5 mx-auto site-section bg-light">
-                <div class="row">
-                  <div class="col-12 text-center mb-5">
-                    <div class="block-heading-1">
+                <div className="row">
+                  <div className="col-12 text-center mb-5">
+                    <div className="block-heading-1">
                       <span className="icon-graduation-hat"></span>
 
                       <h2>Regist As Trainee</h2>
@@ -315,6 +461,14 @@ class registerPage extends Component {
                     />
                   </div>
 
+                  <div
+                    className={
+                      this.state.message_Fullname ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Fullname}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="email">Email address</label>
                     <input
@@ -327,6 +481,14 @@ class registerPage extends Component {
                     />
                   </div>
 
+                  <div
+                    className={
+                      this.state.message_Email ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Email}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input
@@ -337,6 +499,13 @@ class registerPage extends Component {
                       value={this.state.password}
                       onChange={onChange}
                     />
+                  </div>
+                  <div
+                    className={
+                      this.state.message_Password ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Password}
                   </div>
 
                   <div className="form-group">
@@ -386,6 +555,13 @@ class registerPage extends Component {
                       </option>
                     </select>
                   </div>
+                  <div
+                    className={
+                      this.state.message_University ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_University}
+                  </div>
 
                   <div className="form-group">
                     <label htmlFor="field">Field</label>
@@ -419,6 +595,14 @@ class registerPage extends Component {
                     </select>
                   </div>
 
+                  <div
+                    className={
+                      this.state.message_Field ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Field}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="gender">Gender :</label>
                     <br />
@@ -438,11 +622,17 @@ class registerPage extends Component {
                     Fmail
                   </div>
 
+                  <div
+                    className={
+                      this.state.message_Gender ? "alert alert-dark" : null
+                    }
+                  >
+                    {this.state.message_Gender}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="img_path">Image</label>
 
-                 
-                    
                     <input
                       type="file"
                       className="form-control"
@@ -451,15 +641,13 @@ class registerPage extends Component {
                     />
 
                     <input
-                    className="btn  btn-primary text-center"
+                      className="btn  btn-primary text-center"
                       type="button"
                       onClick={fileUpload}
                       value="Upload image"
                     />
-                    
 
                     <progress
-                    
                       value={this.state.progress}
                       max="100"
                       style={{ marginLeft: "15px", marginBottom: "8px" }}
@@ -469,7 +657,6 @@ class registerPage extends Component {
                   <button
                     type="submit"
                     className="btn btn-lg btn-primary btn-block text-center"
-                    
                   >
                     Register As Trainee !
                   </button>

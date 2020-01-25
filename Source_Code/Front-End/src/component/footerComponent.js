@@ -10,11 +10,12 @@ class footerComponents extends Component {
             <div className="col-md-6">
               <div className="row">
                 <div className="col-md-8">
-                  <h2 className="footer-heading mb-4">About Us</h2>
+                  <h2 className="footer-heading mb-4">
+                    <i>Benjamin Franklin</i>
+</h2>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Neque facere laudantium magnam voluptatum autem. Amet
-                    aliquid nesciunt veritatis aliquam.
+                  “Tell me and I forget, teach me and I may remember, involve me and I learn.”
+                 
                   </p>
                 </div>
                 <div className="col-md-4 ml-auto">
@@ -24,13 +25,7 @@ class footerComponents extends Component {
                       <a href="#">About Us</a>
                     </li>
                     <li>
-                      <a href="#">Press Releases</a>
-                    </li>
-                    <li>
-                      <a href="#">Testimonials</a>
-                    </li>
-                    <li>
-                      <a href="#">Terms of Service</a>
+                      <a href="#">Share stories</a>
                     </li>
                     <li>
                       <a href="#">Privacy</a>
@@ -45,10 +40,9 @@ class footerComponents extends Component {
             <div className="col-md-4 ml-auto">
               <div className="mb-5">
                 <div className="mb-5">
-                  <h2 className="footer-heading mb-4">Some Paragraph</h2>
+                  <h2 className="footer-heading mb-4">We’ve been looking for you!</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Repellat nostrum libero iusto dolorum vero atque aliquid.
+                  Everyone has unique, God-given abilities. Use yours to make the world a brighter place.
                   </p>
                 </div>
 

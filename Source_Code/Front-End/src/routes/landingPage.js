@@ -30,10 +30,9 @@ class landingPage extends Component {
             <div className="container">
               <div className="row align-items-center justify-content-center">
                 <div className="col-md-12 col-lg-7 text-center">
-                  <h1>Investment Consulting</h1>
+                  <h1>Engage With Us</h1>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Vel minima quasi quisquam, alias doloremque magni.
+                  For the things we have to learn before we can do them, we learn by doing them.
                   </p>
                 </div>
               </div>
@@ -90,7 +89,7 @@ class landingPage extends Component {
             <div className="row">
               <div className="col-12 text-center">
                 <div className="block-heading-1">
-                  <h2>Our Investors</h2>
+                  <h2>Our Partners</h2>
                 </div>
               </div>
             </div>
@@ -138,27 +137,46 @@ class landingPage extends Component {
                 />
               </div>
               <div className="col-lg-5 ml-auto block-heading-1">
-                <h2>Welcome to Inves</h2>
+                <h2>Who We Are</h2>
+
                 <p>
-                  Accusantium dignissimos voluptas rem consequatur blanditiis
-                  error ratione illo sit quasi ut, praesentium magnam, pariatur
-                  quae, necessitatibus
+                We are people who want to make training procedure easier for each, companies and trainees.
+                </p>
+                <h2>Our Vision</h2>
+
+                <p>
+                  <br></br>
+                  
+                Taking vision seriously, we believe everyone deserves to enjoy great journey.
+                <br></br>
+                <br></br>
+               If that’s a belief you share, you’ll find we’re also serious about your training supporting your ambitions, encouraging your development and both recognising and rewarding the part you play in your training.
+               
+          </p>
+                {/* <h2>we are smarter together</h2>
+                <p>
+               
+                  <h3> Belong We're developers just like you</h3>
+
+                 
+
+
+
+                
                 </p>
                 <p>
-                  Dolor, eligendi voluptate ducimus itaque esse autem
-                  perspiciatis sint! Recusandae dolor aliquid inventore sit,
-                </p>
-                <p>
-                  Recusandae dolor aliquid inventore sit, maiores quisquam
-                  nostrum quaerat dolorum error rerum
-                </p>
+                  <b>
+                Be inspired Compare solutions and learn tips from the best programmers.</b>
+                </p> */}
+
+            
               </div>
             </div>
             <div className="row">
               <div className="col-md-6 mb-4 col-lg-0 col-lg-3">
                 <div className="block-counter-1">
                   <span className="number">
-                    <span data-number="15">0</span>
+                    <span data-number="3">0</span>
                   </span>
                   <span className="caption">Year of Experience</span>
                 </div>
@@ -166,7 +184,7 @@ class landingPage extends Component {
               <div className="col-md-6 mb-4 col-lg-0 col-lg-3">
                 <div className="block-counter-1">
                   <span className="number">
-                    <span data-number="392">0</span>
+                    <span data-number="20">0</span>
                   </span>
                   <span className="caption">Number of Univirsities</span>
                 </div>
@@ -209,14 +227,7 @@ class landingPage extends Component {
                   sit quasi.
                 </p>
               </div>
-              <div className="col-md-6 col-lg-4 mb-4">
-                <span className="icon-anchor d-block mb-3 display-3 text-secondary"></span>
-                <h3 className="text-primary h4 mb-2">Investment Solutions</h3>
-                <p>
-                  Praesentium magnam pariatur quae necessitatibus eligendi
-                  voluptate ducimus.
-                </p>
-              </div>
+             
               <div className="col-md-6 col-lg-4 mb-4">
                 <span className="icon-magnet d-block mb-3 display-3 text-secondary"></span>
                 <h3 className="text-primary h4 mb-2">Individual Approach</h3>
@@ -226,22 +237,7 @@ class landingPage extends Component {
                 </p>
               </div>
 
-              <div className="col-md-6 col-lg-4 mb-4">
-                <span className="icon-briefcase d-block mb-3 display-3 text-secondary"></span>
-                <h3 className="text-primary h4 mb-2">Business Analytics</h3>
-                <p>
-                  Accusantium dignissimos voluptas rem consequatur ratione illo
-                  sit quasi.
-                </p>
-              </div>
-              <div className="col-md-6 col-lg-4 mb-4">
-                <span className="icon-money d-block mb-3 display-3 text-secondary"></span>
-                <h3 className="text-primary h4 mb-2">Investment Solutions</h3>
-                <p>
-                  Praesentium magnam pariatur quae necessitatibus eligendi
-                  voluptate ducimus.
-                </p>
-              </div>
+             
               <div className="col-md-6 col-lg-4 mb-4">
                 <span className="icon-umbrella d-block mb-3 display-3 text-secondary"></span>
                 <h3 className="text-primary h4 mb-2">Individual Approach</h3>
@@ -398,100 +394,7 @@ class landingPage extends Component {
           </div>
         </div>
 
-        <div className="site-section" id="press-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-4 mb-5 mb-lg-0">
-                <div className="block-heading-1">
-                  <h2>Press Releases</h2>
-                </div>
-              </div>
-              <div className="col-lg-8">
-                <ul className="list-unstyled">
-                  <li className="mb-4 d-block d-md-flex">
-                    <div className="mr-5 mb-4">
-                      <img
-                        src="theme/images/img_1.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="h4">
-                        <a href="press-single.html" className="text-black">
-                          How To Invest In Investing Company
-                        </a>
-                      </h2>
-                      <span className="d-block text-secondary mb-4">
-                        Apr 19, 2019
-                      </span>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Pariatur dolores voluptas obcaecati quo
-                        consequuntur mollitia facilis, perferendis molestias
-                        commodi adipisci.
-                      </p>
-                    </div>
-                  </li>
-
-                  <li className="mb-4 d-block d-md-flex">
-                    <div className="mr-5 mb-4">
-                      <img
-                        src="theme/images/img_2.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="h4">
-                        <a href="press-single.html" className="text-black">
-                          How To Invest In Investing Company
-                        </a>
-                      </h2>
-                      <span className="d-block text-secondary mb-4">
-                        Apr 19, 2019
-                      </span>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Pariatur dolores voluptas obcaecati quo
-                        consequuntur mollitia facilis, perferendis molestias
-                        commodi adipisci.
-                      </p>
-                    </div>
-                  </li>
-
-                  <li className="mb-4 d-block d-md-flex">
-                    <div className="mr-5 mb-4">
-                      <img
-                        src="theme/images/img_3.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="h4">
-                        <a href="press-single.html" className="text-black">
-                          How To Invest In Investing Company
-                        </a>
-                      </h2>
-                      <span className="d-block text-secondary mb-4">
-                        Apr 19, 2019
-                      </span>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Pariatur dolores voluptas obcaecati quo
-                        consequuntur mollitia facilis, perferendis molestias
-                        commodi adipisci.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* style={{ backgroundImage: `url(theme/images/hero_1.jpg)` }} */}
+        
 
         <div
           class="site-section block-13 overlay bg-image"
@@ -502,7 +405,7 @@ class landingPage extends Component {
           <div class="container">
             <div class="text-center mb-5">
               <div class="block-heading-1">
-                <h2 class="text-white">Testimonial</h2>
+                <h2 class="text-white">Share in our stories</h2>
               </div>
             </div>
 
@@ -602,78 +505,7 @@ class landingPage extends Component {
           </div>
         </div>
 
-        <div class="site-section" id="blog-section">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 text-center mb-5">
-                <div class="block-heading-1">
-                  <span>Latest Blog Posts</span>
-                  <h2>Our Blog</h2>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div>
-                  <a href="single.html" class="mb-4 d-block">
-                    <img
-                      src="theme/images/img_1.jpg"
-                      alt="Image"
-                      class="img-fluid rounded"
-                    />
-                  </a>
-                  <h2>
-                    <a href="single.html">How to Invest In Investing Company</a>
-                  </h2>
-                  <p class="text-muted mb-3 text-uppercase small">
-                    <span class="mr-2">January 18, 2019</span> By{" "}
-                    <a href="single.html" class="by">
-                      James Cooper
-                    </a>
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quaerat et suscipit iste libero neque. Vitae quidem ducimus
-                    voluptatibus nemo cum odio ab enim nisi, itaque, libero fuga
-                    veritatis culpa quis!
-                  </p>
-                  <p>
-                    <a href="single.html">Get Started</a>
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div>
-                  <a href="single.html" class="mb-4 d-block">
-                    <img
-                      src="theme/images/img_2.jpg"
-                      alt="Image"
-                      class="img-fluid rounded"
-                    />
-                  </a>
-                  <h2>
-                    <a href="single.html">How to Invest In Investing Company</a>
-                  </h2>
-                  <p class="text-muted mb-3 text-uppercase small">
-                    <span class="mr-2">January 18, 2019</span> By{" "}
-                    <a href="single.html" class="by">
-                      James Cooper
-                    </a>
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quaerat et suscipit iste libero neque. Vitae quidem ducimus
-                    voluptatibus nemo cum odio ab enim nisi, itaque, libero fuga
-                    veritatis culpa quis!
-                  </p>
-                  <p>
-                    <a href="single.html">Read More</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    
       </>
     );
   }

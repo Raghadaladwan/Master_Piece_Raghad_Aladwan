@@ -92,23 +92,23 @@ class userProfilePage extends Component {
 
   renderEditTraineeView = () => {
     return (
-      <div className="container"
-      style={{ position: "relative", minHeight: "100vh" }}>
+      <div
+        className="container"
+        style={{ position: "relative", minHeight: "100vh" }}
+      >
         <br></br>
         <br></br>
-        <div className="col-md-6  mx-auto bg-light " 
-        >
+        <div className="col-md-6  mx-auto bg-light ">
           <form
-            class="form-group"
+            className="form-group"
             onSubmit={this.updateTraineeInfo}
             ref={form => (this.form = form)}
           >
-             <div class="col-12 text-center ">
-              <div class="block-heading-1">
+            <div className="col-12 text-center ">
+              <div className="block-heading-1">
                 <h2>Edit your Information</h2>
               </div>
             </div>
-          
 
             <div className="form-group">
               <label>Full Name</label>
@@ -148,18 +148,18 @@ class userProfilePage extends Component {
                 ref={select => (this.uniType = select)}
               >
                 <option>{this.state.traineeInfo.university}</option>
-                <option className="dropdown-item" value="University of Jordan">
+                <option className="dropdown-item" defaultValue="University of Jordan">
                   University of Jordan
                 </option>
-                <option value="Balqa Applied University">
+                <option defaultValue="Balqa Applied University">
                   Balqa Applied University
                 </option>
-                <option value="Yarmouk University">Yarmouk University</option>
+                <option defaultValue="Yarmouk University">Yarmouk University</option>
 
-                <option value="Al al-Bayt University">
+                <option defaultValue="Al al-Bayt University">
                   Al al-Bayt University
                 </option>
-                <option value="JUST University">JUST University</option>
+                <option defaultValue="JUST University">JUST University</option>
               </select>
             </div>
 
@@ -170,13 +170,13 @@ class userProfilePage extends Component {
                 ref={select => (this.fieldType = select)}
               >
                 <option>{this.state.traineeInfo.field}</option>
-                <option className="dropdown-item" name="IT" value="IT">
+                <option className="dropdown-item" name="IT" defaultValue="IT">
                   IT
                 </option>
-                <option value="Engineering" name="Engineering">
+                <option defaultValue="Engineering" name="Engineering">
                   Engineering
                 </option>
-                <option value="Economy" name="Economy">
+                <option defaultValue="Economy" name="Economy">
                   Economy
                 </option>
               </select>
@@ -232,7 +232,6 @@ class userProfilePage extends Component {
         <br></br>
         <br></br>
         <div className="row">
-          
           <div className="col-md offset-2">
             <div
               className="col-md-10 list-group-item"
@@ -278,8 +277,11 @@ class userProfilePage extends Component {
                 value={this.state.traineeInfo.password}
               />
             </div>
-            <div onDoubleClick={this.edit_info} className="col-md-10 list-group-item d-flex justify-content-end ">
-              <button  className='btn btn-info '>Click any field to edit</button>
+            <div
+              onDoubleClick={this.edit_info}
+              className="col-md-10 list-group-item d-flex justify-content-end "
+            >
+              <button className="btn btn-info ">Click any field to edit</button>
             </div>
           </div>
         </div>
@@ -393,7 +395,7 @@ class userProfilePage extends Component {
     // const url='../../public/back2.jpg'
     return (
       <div
-        className="container"
+        className="container bg-light"
         style={{ position: "relative", minHeight: "100vh" }}
       >
         <br />
@@ -414,7 +416,7 @@ class userProfilePage extends Component {
                 <b>About Us</b> :
               </span>
               <span className="list-group-item">
-                {" "}
+             
                 {this.state.companyInfo.comp_description}
               </span>
             </div>
@@ -422,13 +424,13 @@ class userProfilePage extends Component {
 
           <div className="col-3  form-group">
             <div
-              class="form-control "
+              className="form-control "
               style={{ marginTop: "40%" }}
               onDoubleClick={this.edit_info}
             >
-              {" "}
-              comp name
+            
               {this.state.companyInfo.name}
+              <b></b>
             </div>
             <br></br>
             <br></br>
@@ -436,7 +438,7 @@ class userProfilePage extends Component {
             <br></br>
             <div className="  row " style={{ width: "50rem" }}>
               <div
-                className=" col-md-10  list-group-item"
+                className=" col-md-8  list-group-item"
                 onDoubleClick={this.edit_info}
               >
                 <span style={{ color: "#EC7063" }}>
@@ -452,7 +454,7 @@ class userProfilePage extends Component {
               </div>
 
               <div
-                className="col-md-10  list-group-item"
+                className="col-md-8  list-group-item"
                 onDoubleClick={this.edit_info}
               >
                 <span style={{ color: "#EC7063" }}>
@@ -463,7 +465,7 @@ class userProfilePage extends Component {
               </div>
 
               <div
-                className="col-md-10 list-group-item"
+                className="col-md-8 list-group-item"
                 onDoubleClick={this.edit_info}
               >
                 <span style={{ color: "#EC7063" }}>
@@ -473,7 +475,7 @@ class userProfilePage extends Component {
               </div>
 
               <div
-                className="col-md-10 list-group-item"
+                className="col-md-8 list-group-item"
                 onDoubleClick={this.edit_info}
               ></div>
             </div>
@@ -482,8 +484,8 @@ class userProfilePage extends Component {
 
         <br></br>
 
-        <div class="card-body">
-          <small class=" col-md-10 offset-md-1 text-muted">
+        <div className="card-body">
+          <small className=" col-md-10 offset-md-1 text-muted">
             Last updated 3 mins ago
           </small>
         </div>

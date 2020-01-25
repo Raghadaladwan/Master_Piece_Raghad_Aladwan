@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/trainee-future", {
-  useNewUrlParser: true
+  useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true
 });
 const db = mongoose.connection;
 db.on("error", function() {

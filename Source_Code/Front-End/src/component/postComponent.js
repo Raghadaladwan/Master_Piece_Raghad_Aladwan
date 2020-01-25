@@ -64,7 +64,6 @@ class postComponent extends Component {
         newRequest
       )
       .then(res => {
-        //try to get all post again!!!!!!
         this.setState({
           btn: "disabled"
         });
@@ -73,55 +72,46 @@ class postComponent extends Component {
 
   renderCopmanyPosts = () => {
     return (
-  
-        
-        <div className=" container col-6  " style={{ maxWidth: "18rem" }} >
-              
-          <br></br>
-      
-          <div className='bg-light'>
-            <h4 className="card-header">{this.props.post.field}</h4>
+      <div className=" container col-6  " style={{ maxWidth: "18rem" }}>
+        <br></br>
 
-            <div className='class="card-text'>
-              <h4 className="card-body">
-               
-                Description :<br></br> {this.props.post.job_description}
-              </h4>
-              <hr></hr>
-              <span>
-                From : &nbsp;{this.props.post.from_Date}
-                <br /> To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
-                {this.props.post.to_Date}
-              </span>
-            </div>
-            <br></br>
-            <div className="row justify-content-center">
-              <button
-                className="btn btn-danger "
-                onClick={this.deletePost.bind(this)}
-              >
-                delete
-              </button>
-             
-            </div>
+        <div className="bg-light">
+          <h4 className="card-header">{this.props.post.field}</h4>
+
+          <div className='class="card-text'>
+            <h4 className="card-body">
+              Description :<br></br> {this.props.post.job_description}
+            </h4>
             <hr></hr>
+            <span>
+              From : &nbsp;{this.props.post.from_Date}
+              <br /> To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
+              {this.props.post.to_Date}
+            </span>
           </div>
-     
+          <br></br>
+          <div className="row justify-content-center">
+            <button
+              className="btn btn-danger "
+              onClick={this.deletePost.bind(this)}
+            >
+              delete
+            </button>
+          </div>
+          <hr></hr>
         </div>
-    
+      </div>
     );
   };
 
   renderTraineePosts = () => {
     return (
-
-    // img size px // button at buttom // dashboard card width 100%
       <div className="container bg-light">
-       <br></br>
-       <br></br>
-       <br></br>
-       <br></br>
-        <div className="row  " >
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div className="row  ">
           <div className="col-4  ">
             <img
               src={this.props.post.img_path}
@@ -130,25 +120,28 @@ class postComponent extends Component {
             ></img>
           </div>
 
-          <div  className="col-8 ">
+          <div className="col-8 ">
             <h4 className="card-header h2">{this.props.post.field}</h4>
 
-            <h4>Job Description : 
-              
+            <h4>
+              Job Description :
               <br></br>
-            {this.props.post.job_description}</h4>
-           
-            <small class= " col-md-10 offset-md-1 text-muted">
-            <div>
-              <b>
-              From Date :{this.props.post.from_Date}
-              </b>
-           <br></br>
-           <b>
-              To Date:{this.props.post.to_Date}
-              </b>
+              <br></br>
+              <pre>
+                <h5>
+{this.props.post.job_description}
+                </h5>
+              
+              </pre>
+             
+            </h4>
+
+            <small className=" col-md-10 offset-md-1 text-muted">
+              <div>
+                <b>From :{this.props.post.from_Date}</b>
+                <br></br>
+                <b>To &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{this.props.post.to_Date}</b>
               </div>
-            
             </small>
             <div>
               <button
@@ -165,7 +158,7 @@ class postComponent extends Component {
               >
                 Send Request
               </button>
-              </div>
+            </div>
           </div>
         </div>
         <br />
